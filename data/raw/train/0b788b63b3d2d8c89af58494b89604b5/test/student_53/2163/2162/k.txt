@@ -1,0 +1,128 @@
+k.txt		Tue Dec 24 10:10:44 2019
+
+A fost selectata planata cu numarul 0		Tue Dec 24 10:11:02 2019
+
+A fost plasata planata la pozitia 30		32		Tue Dec 24 10:11:03 2019
+
+k.txt		Tue Dec 24 10:13:42 2019
+
+The Sun was colected		Tue Dec 24 10:13:50 2019
+
+The Sun was colected		Tue Dec 24 10:13:52 2019
+
+The Sun was colected		Tue Dec 24 10:13:54 2019
+
+The Sun was colected		Tue Dec 24 10:13:57 2019
+
+A fost selectata planata cu numarul 3		Tue Dec 24 10:14:00 2019
+
+A fost plasata planata la pozitia 41		32		Tue Dec 24 10:14:01 2019
+
+The Sun was colected		Tue Dec 24 10:14:05 2019
+
+The Sun was colected		Tue Dec 24 10:14:09 2019
+
+k.txt		Tue Dec 24 10:15:38 2019
+
+The Sun was colected		Tue Dec 24 10:15:50 2019
+
+The Sun was colected		Tue Dec 24 10:15:52 2019
+
+The Sun was colected		Tue Dec 24 10:15:53 2019
+
+The Sun was colected		Tue Dec 24 10:15:54 2019
+
+A fost selectata planata cu numarul 0		Tue Dec 24 10:15:55 2019
+
+A fost plasata planata la pozitia 19		12		Tue Dec 24 10:15:57 2019
+
+The Sun was colected		Tue Dec 24 10:15:59 2019
+
+The Sun was colected		Tue Dec 24 10:16:01 2019
+
+A fost selectata planata cu numarul 0		Tue Dec 24 10:16:03 2019
+
+A fost plasata planata la pozitia 19		27		Tue Dec 24 10:16:05 2019
+
+The Sun was colected		Tue Dec 24 10:16:06 2019
+
+The Sun was colected		Tue Dec 24 10:16:11 2019
+
+The Sun was colected		Tue Dec 24 10:16:15 2019
+
+The Sun was colected		Tue Dec 24 10:16:22 2019
+
+The Sun was colected		Tue Dec 24 10:16:28 2019
+
+The Sun was colected		Tue Dec 24 10:16:32 2019
+
+The Sun was colected		Tue Dec 24 10:16:34 2019
+
+A fost selectata planata cu numarul 0		Tue Dec 24 10:16:39 2019
+
+A fost plasata planata la pozitia 19		17		Tue Dec 24 10:16:40 2019
+
+The Sun was colected		Tue Dec 24 10:16:42 2019
+
+The Sun was colected		Tue Dec 24 10:16:43 2019
+
+The Sun was colected		Tue Dec 24 10:16:48 2019
+
+A fost selectata planata cu numarul 0		Tue Dec 24 10:16:50 2019
+
+A fost plasata planata la pozitia 19		22		Tue Dec 24 10:16:51 2019
+
+The Sun was colected		Tue Dec 24 10:17:44 2019
+
+The Sun was colected		Tue Dec 24 10:17:46 2019
+
+The Sun was colected		Tue Dec 24 10:17:48 2019
+
+The Sun was colected		Tue Dec 24 10:17:48 2019
+
+The Sun was colected		Tue Dec 24 10:17:50 2019
+
+The Sun was colected		Tue Dec 24 10:17:51 2019
+
+The Sun was colected		Tue Dec 24 10:17:52 2019
+
+The Sun was colected		Tue Dec 24 10:17:52 2019
+
+The Sun was colected		Tue Dec 24 10:17:53 2019
+
+The Sun was colected		Tue Dec 24 10:17:55 2019
+
+The Sun was colected		Tue Dec 24 10:17:58 2019
+
+The Sun was colected		Tue Dec 24 10:18:08 2019
+
+A fost selectata planata cu numarul 0		Tue Dec 24 10:18:12 2019
+
+A fost plasata planata la pozitia 19		32		Tue Dec 24 10:18:13 2019
+
+The Sun was colected		Tue Dec 24 10:18:15 2019
+
+A fost selectata planata cu numarul 0		Tue Dec 24 10:18:19 2019
+
+A fost plasata planata la pozitia 30		12		Tue Dec 24 10:18:20 2019
+
+The Sun was colected		Tue Dec 24 10:18:24 2019
+
+A fost selectata planata cu numarul 4		Tue Dec 24 10:18:29 2019
+
+A fost plasata planata la pozitia 30		32		Tue Dec 24 10:18:30 2019
+
+The Sun was colected		Tue Dec 24 10:18:34 2019
+
+The Sun was colected		Tue Dec 24 10:18:54 2019
+
+The Sun was colected		Tue Dec 24 10:18:55 2019
+
+The Sun was colected		Tue Dec 24 10:19:05 2019
+
+The Sun was colected		Tue Dec 24 10:19:11 2019
+
+A fost selectata planata cu numarul 4		Tue Dec 24 10:19:16 2019
+
+A fost plasata planata la pozitia 30		22		Tue Dec 24 10:19:17 2019
+

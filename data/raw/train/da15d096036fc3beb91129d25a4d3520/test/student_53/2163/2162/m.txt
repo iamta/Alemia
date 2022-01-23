@@ -1,0 +1,10 @@
+m.txt		Tue Dec 24 09:38:33 2019
+
+A fost selectata planata cu numarul 3		Tue Dec 24 09:38:46 2019
+
+A fost plasata planata la pozitia 74		17		Tue Dec 24 09:38:49 2019
+
+A fost selectata planata cu numarul 3		Tue Dec 24 09:38:59 2019
+
+A fost plasata planata la pozitia 30		17		Tue Dec 24 09:39:00 2019
+
