@@ -8,19 +8,32 @@ import {
 } from "react-bootstrap"
 import axios from "axios"
 import "./stylesheets/App.css"
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const API_BASE_ADDRESS = "http://127.0.0.1:3001"
 
-class App extends React.Component{
+function createData(feature, number) {
+    return { feature, number };
+}
+
+class App extends React.Component {
 
     default_state = {
         current_step: 1,
         selected_filename: "Archive",
         predicted_grade: "NaN",
-        adjusted_grade: ""
+        adjusted_grade: "",
+        done: '0',
+        rows: []
     }
 
-    constructor(props){
+    constructor(props) {
 
         super(props)
 
@@ -36,7 +49,7 @@ class App extends React.Component{
 
     }
 
-    selectArchive(event){
+    selectArchive(event) {
 
         var form_data = new FormData();
 
@@ -53,17 +66,53 @@ class App extends React.Component{
                 selected_filename: event.target.files[0].name,
                 predicted_grade: response.data.predicted_grade
             })
-        }).catch(error => console.log(error));
+        }).catch(error => console.log(error))
+            .then(
+                axios.get(API_BASE_ADDRESS + "/return_statistics", {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/json"
+                    }
+                }).then(response => {
+                    this.setState({
+                        rows: [
+                            createData('Classes', response.data[0].nr_clase),
+                            createData('Errors', response.data[0].nr_errors),
+                            createData('Inheritances', response.data[0].nr_inheritance),
+                            createData('Virtual classes', response.data[0].nr_virtual),
+                            createData('Static variables', response.data[0].nr_static),
+                            createData('Global variables', response.data[0].nr_global),
+                            createData('Public parameters', response.data[0].nr_public),
+                            createData('Private parameters', response.data[0].nr_private),
+                            createData('Protected', response.data[0].nr_protected),
+                            createData('Defines', response.data[0].nr_define),
+                            createData('Templates', response.data[0].nr_template),
+                            createData('Stl', response.data[0].nr_stl),
+                            createData('Namespaces', response.data[0].nr_namespace),
+                            createData('Enums', response.data[0].nr_enum),
+                            createData('Structs', response.data[0].nr_struct),
+                            createData('Cpps', response.data[0].nr_cpp),
+                            createData('Comments', response.data[0].nr_comments),
+                            createData('Functions', response.data[0].nr_function),
+                            createData('Headers size', response.data[0].headers_size),
+                            createData('Sources size', response.data[0].sources_size)
+                        ],
+                        done: 1
+                    })
+                })
+            );
+
+
 
     }
 
-    adjustGrade(event){
+    adjustGrade(event) {
         this.setState({
             adjusted_grade: event.target.value
         })
     }
 
-    sendChangeRequest(){
+    sendChangeRequest() {
         axios.get(API_BASE_ADDRESS + "/adjust_grade", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -74,7 +123,7 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    retrainModel(){
+    retrainModel() {
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -82,21 +131,21 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    restartGradingProcess(){
+    restartGradingProcess() {
         this.setState(this.default_state)
     }
 
-    render(){
+    render() {
 
         var first_step_classes = ["process-step"]
         var second_step_classes = ["process-step"]
 
         // Get classes for each jumbotron
-        if (this.state.current_step === 1){
+        if (this.state.current_step === 1) {
             first_step_classes.push("current")
             second_step_classes.push("inactive")
         }
-        else{
+        else {
             first_step_classes.push("done")
             second_step_classes.push("current")
         }
@@ -104,7 +153,7 @@ class App extends React.Component{
         second_step_classes = second_step_classes.join(" ")
 
         return (
-            <div className="App">
+            <div className="App" >
 
                 <Container>
 
@@ -154,7 +203,7 @@ class App extends React.Component{
                         </Form>
 
                         <p>Go to the next student or retrain the machine learning model. When the training process ends, the new model will automatically replace the current one.</p>
-                        
+
                         <Button
                             variant="secondary"
                             size="sm"
@@ -174,9 +223,36 @@ class App extends React.Component{
 
                     </Jumbotron>
 
+                    {this.state.done === 1 ? (
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableCell className="header">Feature</TableCell>
+                                    <TableCell className="header" align="right">Number</TableCell>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.rows.map((row) => (
+                                        <TableRow
+                                            key={row.feature}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell component="th" scope="row">
+                                                {row.feature}
+                                            </TableCell>
+                                            <TableCell align="right">{row.number}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    )
+                        :
+                        <h1>Add archive to see statistics</h1>
+                    }
+
                 </Container>
 
-            </div>
+            </div >
         )
     }
 }
