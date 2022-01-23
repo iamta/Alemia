@@ -1,4 +1,11 @@
 import React from "react"
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import {
     Container,
     Jumbotron,
@@ -11,16 +18,22 @@ import "./stylesheets/App.css"
 
 const API_BASE_ADDRESS = "http://127.0.0.1:3001"
 
-class App extends React.Component{
+function createData(name, grade) {
+    return { name, grade };
+}
+
+class App extends React.Component {
 
     default_state = {
         current_step: 1,
         selected_filename: "Archive",
         predicted_grade: "NaN",
-        adjusted_grade: ""
+        adjusted_grade: "",
+        projects_names:"",
+        rows:[]
     }
 
-    constructor(props){
+    constructor(props) {
 
         super(props)
 
@@ -36,7 +49,7 @@ class App extends React.Component{
 
     }
 
-    selectArchive(event){
+    selectArchive(event) {
 
         var form_data = new FormData();
 
@@ -48,22 +61,29 @@ class App extends React.Component{
                 "Content-Type": "multipart/form-data"
             }
         }).then(response => {
+            var arr=[]
+            for(let i=0;i<response.data.predicted_grade.length;i++)
+            {
+                arr.push(createData(response.data.projects_names[i],response.data.predicted_grade[i]))
+            }
             this.setState({
                 current_step: 2,
                 selected_filename: event.target.files[0].name,
-                predicted_grade: response.data.predicted_grade
+                predicted_grade: response.data.predicted_grade,
+                projects_names: response.data.projects_names,
+                rows:arr
             })
+            
         }).catch(error => console.log(error));
-
     }
 
-    adjustGrade(event){
+    adjustGrade(event) {
         this.setState({
             adjusted_grade: event.target.value
         })
     }
 
-    sendChangeRequest(){
+    sendChangeRequest() {
         axios.get(API_BASE_ADDRESS + "/adjust_grade", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -74,7 +94,7 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    retrainModel(){
+    retrainModel() {
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -82,21 +102,21 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    restartGradingProcess(){
+    restartGradingProcess() {
         this.setState(this.default_state)
     }
 
-    render(){
+    render() {
 
         var first_step_classes = ["process-step"]
         var second_step_classes = ["process-step"]
 
         // Get classes for each jumbotron
-        if (this.state.current_step === 1){
+        if (this.state.current_step === 1) {
             first_step_classes.push("current")
             second_step_classes.push("inactive")
         }
-        else{
+        else {
             first_step_classes.push("done")
             second_step_classes.push("current")
         }
@@ -133,7 +153,60 @@ class App extends React.Component{
                         <h3>Second Step</h3>
                         <p>Review the predicted grade. If you consider it is not right, create a change request to improve the machine learning models trained in the future.</p>
 
-                        <p className="grade">The predicted grade is <b>{this.state.predicted_grade}</b>.</p>
+
+                        <p className="grade">
+                            
+                            <b>PREDICTED GRADES</b>
+                            
+                        </p>
+                        <p></p>
+
+                        <div>
+                            {(() => {
+                                if (this.state.rows=="") {
+                                return (
+                                    <div></div>
+                                )
+                                } 
+                                else {
+                                return (
+                                    <div>
+                                        <TableContainer component={Paper}>
+                                            <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
+                                                <TableHead>
+                                                <TableRow>
+                                                    {/* <TableCell>Dessert (100g serving)</TableCell> */}
+                                                    <TableCell><b>Project Name</b></TableCell>
+                                                    <TableCell><b>Grade</b></TableCell>
+                                                </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {this.state.rows.map((row) => (
+                                                        <TableRow
+                                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                        >
+                                                        <TableCell>{row.name}</TableCell>
+                                                        <TableCell>{row.grade}</TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </div>
+                                )
+                                }
+                            })()}
+                        </div>
+                        
+                        
+                        <br>
+                        </br>
+                        <br>
+                        </br>
+                        
+                        
+                        
+                        
                         <Form>
                             <InputGroup className="mb-3">
                                 <Form.Control
@@ -154,7 +227,7 @@ class App extends React.Component{
                         </Form>
 
                         <p>Go to the next student or retrain the machine learning model. When the training process ends, the new model will automatically replace the current one.</p>
-                        
+
                         <Button
                             variant="secondary"
                             size="sm"

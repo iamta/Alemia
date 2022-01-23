@@ -56,23 +56,62 @@ def predict_route():
     with zipfile.ZipFile(full_path, "r") as zip_file:
         zip_file.extractall(extraction_full_path)
 
-    # Get features
-    features = feature_extraction.retrain_data_one(extraction_full_path + "/")
-    features = preprocessor.transform_entry(features)
+    aux = extraction_full_path
+    print(len(next(os.walk(extraction_full_path+"/"))[1]))
+    if(len(next(os.walk(extraction_full_path+"/"))[1]) == 1):
+        # Get features
+        features = feature_extraction.retrain_data_one(
+            extraction_full_path + "/")
+        print(extraction_full_path)
+        features = preprocessor.transform_entry(features)
 
-    # Predict the grade
-    grade = predictor.predict([features])[0]
-    grade = round(grade, 2)
+        # Predict the grade
+        grade = predictor.predict([features])[0]
+        grade = round(grade, 2)
 
-    # Dump the grade into the specific CSV file
-    grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
-    grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
-    grades_df = grades_df[["label", "grade"]]
-    grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
+        # Dump the grade into the specific CSV file
+        grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
+        grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
+        grades_df = grades_df[["label", "grade"]]
+        grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
+        arr = []
+        arr.append(grade)
+        arr_names = []
+        arr_names.append(uploaded_file.filename)
+        # Return a result
+        result = {"predicted_grade": arr,
+                  "projects_names": arr_names}
+        return jsonify(result)
 
-    # Return a result
-    result = {"predicted_grade": grade}
-    return jsonify(result)
+    else:
+        aux_2 = ""
+        arr_names = []
+        arr_grades = []
+        for filename in os.listdir(extraction_full_path+"/"):
+            grade = 0
+            extraction_full_path = aux+"/"+filename
+            print(extraction_full_path+"/")
+            features = feature_extraction.retrain_data_one(
+                extraction_full_path+"/")
+            features = preprocessor.transform_entry(features)
+
+            # Predict the grade
+            grade = predictor.predict([features])[0]
+            grade = round(grade, 2)
+
+            # Dump the grade into the specific CSV file
+            grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
+            grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
+            grades_df = grades_df[["label", "grade"]]
+            grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
+            arr_names.append(filename)
+            arr_grades.append(grade)
+            aux_2 += "  "+str(grade)
+            # print(aux_2)
+
+        #     # Return a result
+        result = {"predicted_grade": arr_grades, "projects_names": arr_names}
+        return jsonify(result)
 
 
 # Grade adjusting route
@@ -135,7 +174,7 @@ def main():
     preprocessor = Preprocessor()
 
     # Run the web server
-    app.run(host="0.0.0.0", port=3001, debug=True)
+    app.run(host="localhost", port=3001, debug=True)
 
 
 if __name__ == "__main__":

@@ -26,15 +26,15 @@ class Train:
         else:
             self.regressor = LinearRegression()
 
-        #TODO(@apostolescus)
+        # TODO(@apostolescus)
         self.x, self.y, self.test_data, _ = Preprocessor().get_dataset()
 
     # False to get test data, True to get train data
-    def _get_test_train_data(self, train, all = False):
+    def _get_test_train_data(self, train, all=False):
 
         if all is True:
             return self.x, self.y
-        
+
         x_train, x_test, y_train, y_test = train_test_split(self.x,
                                                             self.y,
                                                             test_size=0.2)
@@ -51,7 +51,7 @@ class Train:
 
         joblib.dump(self.regressor, WEIGHTS_FILE)
 
-    #test method - plots the difference btw prediction and ground truth
+    # test method - plots the difference btw prediction and ground truth
     def test(self, model_name=WEIGHTS_FILE):
 
         self.regressor = joblib.load(model_name)
@@ -68,8 +68,8 @@ class Train:
         # plt.show()
         plt.savefig("graph.png")
 
-    #compares multiple prediction methods
-    #generates graphic representation of RMSE
+    # compares multiple prediction methods
+    # generates graphic representation of RMSE
     def test_multiple_methods(self):
 
         x_train, y_train = self._get_test_train_data(True)
@@ -131,22 +131,22 @@ class Train:
 
         return rmse
 
-    def calculate_test(self, model_name = WEIGHTS_FILE):
+    def calculate_test(self, model_name=WEIGHTS_FILE):
         self.regressor = joblib.load(model_name)
 
         y_predicted = self.regressor.predict(self.test_data)
-    
+
         f = open("../others/results.txt", "w")
 
         for i in y_predicted:
-            f.write(str(round(i,2)) + "\n")
-  
+            f.write(str(round(i, 2)) + "\n")
+
         return y_predicted
 
     def _load_true_notes(self):
 
         array = np.loadtxt("true_notes")
-        print("True notes:",array)
+        print("True notes:", array)
 
         return array
 
@@ -164,7 +164,7 @@ class Predictor:
         return prediction
 
 
-#How to run
+# How to run
 
 train = Train(True)
 train.train()
@@ -179,4 +179,3 @@ train.calculate_test()
 
 # # print(y_true)
 # print("RMSE: ", train._calculate_rmse(y_true, true_notes))
-
