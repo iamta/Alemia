@@ -16,6 +16,13 @@ def preprocess_datas(src_dir, dest_dir):
     dest_fields = dest_dir.split("/")
 
     for filename in glob.iglob(src_dir + "**/*.*", recursive=True):
+
+        if(os.path.isdir(filename)):
+            continue
+
+        if "/Debug/" in filename:
+            continue
+
         fields = filename.split("/")
 
         my_dir = ""
