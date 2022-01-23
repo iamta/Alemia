@@ -1,5 +1,6 @@
 # For backend
 backend/__pycache__
+backend/uploads
 
 # For user interface
 user-interface/node_modules

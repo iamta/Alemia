@@ -40,7 +40,8 @@ def preprocess_datas(src_dir, dest_dir):
         elif (filename.endswith(".cpp")):
             shutil.copy2(filename,
                          dest_dir + my_dir + "/sources/" + fields[-1])
-        else:
+        elif ("Debug" in filename or "DEBUG" in filename or "/." in filename) == False:
+            print(filename)
             shutil.copy2(filename, dest_dir + my_dir + "/rest/" + fields[-1])
 
     return newfiles

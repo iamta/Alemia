@@ -1,0 +1,35 @@
+﻿  CGame.cpp
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\ConsoleInput.h(12,3): warning C4091: 'typedef ': ignored on left of 'UserInterface::x_y' when no variable is declared
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\CGame.cpp(324,11): warning C4473: 'scanf_s' : not enough arguments passed for format string
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\CGame.cpp(324,11): message : placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\CGame.cpp(324,11): message : the missing variadic argument 2 is required by format string '%c'
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\CGame.cpp(324,11): message : this argument is used as a buffer size
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\CGame.cpp(460,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\CGame.cpp(531,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\CGame.cpp(553,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  ConsoleInput.cpp
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\ConsoleInput.h(12,3): warning C4091: 'typedef ': ignored on left of 'UserInterface::x_y' when no variable is declared
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\ConsoleInput.cpp(96,15): warning C4244: 'argument': conversion from 'WORD' to '_Elem', possible loss of data
+          with
+          [
+              _Elem=char
+          ]
+  ConsoleOutput.cpp
+  Main.cpp
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\ConsoleInput.h(12,3): warning C4091: 'typedef ': ignored on left of 'UserInterface::x_y' when no variable is declared
+  Meniu.cpp
+  Money.cpp
+  Names.cpp
+  Options.cpp
+  Plants.cpp
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\Plants.cpp(144,19): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\Plants.cpp(259,19): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  PlayerNames.cpp
+  Proiectil.cpp
+  Sun.cpp
+  terrain.cpp
+  Time.cpp
+  Zombie.cpp
+  Generating Code...
+X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\Test\ConsoleInput.cpp(103): warning C4715: 'UserInterface::ConsoleInput::keyEventProc': not all control paths return a value
+  Test.vcxproj -> X:\Documente Facultate\ANUL IV\Inteligenta Artificiala\Tema 2\Test\x64\Debug\Test.exe

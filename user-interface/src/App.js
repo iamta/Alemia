@@ -9,7 +9,7 @@ import {
 import axios from "axios"
 import "./stylesheets/App.css"
 
-const API_BASE_ADDRESS = "http://127.0.0.1:3001"
+const API_BASE_ADDRESS = "http://20.115.8.75:3001"
 
 class App extends React.Component{
 
