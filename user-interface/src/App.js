@@ -9,9 +9,9 @@ import {
 import axios from "axios"
 import "./stylesheets/App.css"
 
-const API_BASE_ADDRESS = "http://127.0.0.1:3001"
+const API_BASE_ADDRESS = "http://20.123.187.92:3001"
 
-class App extends React.Component{
+class App extends React.Component {
 
     default_state = {
         current_step: 1,
@@ -20,7 +20,7 @@ class App extends React.Component{
         adjusted_grade: ""
     }
 
-    constructor(props){
+    constructor(props) {
 
         super(props)
 
@@ -36,7 +36,7 @@ class App extends React.Component{
 
     }
 
-    selectArchive(event){
+    selectArchive(event) {
 
         var form_data = new FormData();
 
@@ -57,13 +57,13 @@ class App extends React.Component{
 
     }
 
-    adjustGrade(event){
+    adjustGrade(event) {
         this.setState({
             adjusted_grade: event.target.value
         })
     }
 
-    sendChangeRequest(){
+    sendChangeRequest() {
         axios.get(API_BASE_ADDRESS + "/adjust_grade", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -74,7 +74,7 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    retrainModel(){
+    retrainModel() {
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -82,21 +82,21 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    restartGradingProcess(){
+    restartGradingProcess() {
         this.setState(this.default_state)
     }
 
-    render(){
+    render() {
 
         var first_step_classes = ["process-step"]
         var second_step_classes = ["process-step"]
 
         // Get classes for each jumbotron
-        if (this.state.current_step === 1){
+        if (this.state.current_step === 1) {
             first_step_classes.push("current")
             second_step_classes.push("inactive")
         }
-        else{
+        else {
             first_step_classes.push("done")
             second_step_classes.push("current")
         }
@@ -154,7 +154,7 @@ class App extends React.Component{
                         </Form>
 
                         <p>Go to the next student or retrain the machine learning model. When the training process ends, the new model will automatically replace the current one.</p>
-                        
+
                         <Button
                             variant="secondary"
                             size="sm"
