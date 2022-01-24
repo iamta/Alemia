@@ -11,13 +11,19 @@ import "./stylesheets/App.css"
 
 const API_BASE_ADDRESS = "http://127.0.0.1:3001"
 
+function createElement(zipName, zipGrade) {
+    return { zipName, zipGrade };
+}
+
 class App extends React.Component{
 
     default_state = {
         current_step: 1,
         selected_filename: "Archive",
         predicted_grade: "NaN",
-        adjusted_grade: ""
+        adjusted_grade: "",
+        filename_and_grade: [],
+        selectedItem: ""
     }
 
     constructor(props){
@@ -33,6 +39,8 @@ class App extends React.Component{
         this.sendChangeRequest = this.sendChangeRequest.bind(this)
         this.retrainModel = this.retrainModel.bind(this)
         this.restartGradingProcess = this.restartGradingProcess.bind(this)
+        this.selectArchive2 = this.selectArchive2.bind(this)
+        this.setValue = this.setValue.bind(this)
 
     }
 
@@ -48,13 +56,43 @@ class App extends React.Component{
                 "Content-Type": "multipart/form-data"
             }
         }).then(response => {
+            var vectorFiles = []
+            vectorFiles.push(createElement(event.target.files[0].name,response.data.predicted_grade))
+        
             this.setState({
                 current_step: 2,
                 selected_filename: event.target.files[0].name,
-                predicted_grade: response.data.predicted_grade
+                predicted_grade: response.data.predicted_grade,
+                filename_and_grade: vectorFiles
             })
         }).catch(error => console.log(error));
 
+    }
+
+    selectArchive2(event){
+
+        var form_data = new FormData();
+
+        form_data.append("file", event.target.files[0])
+
+        axios.post(API_BASE_ADDRESS + "/predictProjects", form_data, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "multipart/form-data"
+            }
+        }).then(response => {
+            //console.log(response.data)
+            var vectorFiles = []
+            for(let i = 0; i < response.data.zipNames.length; i++)
+            {
+                vectorFiles.push(createElement(response.data.zipNames[i],response.data.zipGrades[i]))
+            }
+            this.setState({
+                current_step: 2,
+                selected_filename: event.target.files[0].name,
+                filename_and_grade: vectorFiles
+            })
+        }).catch(error => console.log(error));
     }
 
     adjustGrade(event){
@@ -69,7 +107,8 @@ class App extends React.Component{
                 "Access-Control-Allow-Origin": "*"
             },
             params: {
-                adjusted_grade: this.state.adjusted_grade
+                adjusted_grade: this.state.adjusted_grade,
+                original_name: this.state.selectedItem
             }
         }).catch(error => console.log(error));
     }
@@ -85,6 +124,11 @@ class App extends React.Component{
     restartGradingProcess(){
         this.setState(this.default_state)
     }
+
+    setValue(event){
+        this.state.selectedItem = event.target.value
+    }
+    
 
     render(){
 
@@ -125,6 +169,15 @@ class App extends React.Component{
                                 onChange={this.selectArchive}
                             />
                         </Form>
+                        <br></br>
+                        <p>Select the <code>.zip</code> archive containing the projects of the students you want to grade. Results will be received according to the name of each archive uploaded.</p>
+                        <Form>
+                            <Form.File
+                                label={this.state.selected_filename}
+                                custom
+                                onChange={this.selectArchive2}
+                            />
+                        </Form>
                     </Jumbotron>
 
                     {/* Place to bind the predicted grade, change it or retrain the model */}
@@ -132,8 +185,23 @@ class App extends React.Component{
 
                         <h3>Second Step</h3>
                         <p>Review the predicted grade. If you consider it is not right, create a change request to improve the machine learning models trained in the future.</p>
+                        
+                        {
+                            this.state.filename_and_grade.map(element=>
+                            {
+                                return <p className="grade">The predicted grade for paper <b>{element.zipName}</b> is <b>{element.zipGrade}</b>.</p>
+                            })                    
+                        }
 
-                        <p className="grade">The predicted grade is <b>{this.state.predicted_grade}</b>.</p>
+                        <select value={this.state.filename_and_grade.zipName} onChange={this.setValue}>
+                            {
+                                this.state.filename_and_grade.map(element=>
+                                    {
+                                        return <option value={element.zipName}>{element.zipName}</option>
+                                    })
+                            }
+                        </select>
+                        
                         <Form>
                             <InputGroup className="mb-3">
                                 <Form.Control
