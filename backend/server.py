@@ -23,6 +23,9 @@ last_student_scanned = None
 preprocessor = None
 predictor = None
 
+archieveNames = []
+newArchiveNames = []
+
 # Create the Flask web app
 app = Flask(__name__)
 CORS(app)
@@ -74,6 +77,71 @@ def predict_route():
     result = {"predicted_grade": grade}
     return jsonify(result)
 
+# -------------------------------------------------------------------------------------------
+# Prediction route for more projects
+@app.route("/predictProjects", methods=["POST"])
+def predict_route_projects():
+
+    global last_student_scanned, preprocessor, predictor
+
+    global archieveNames, newArchiveNames
+
+    # Get arguments
+    uploaded_file = request.files["file"]
+
+    # Generate a directory name for archives
+    unique_directory = uploaded_file.filename + str(time.time())
+    unique_directory = MD5.new(unique_directory.encode("utf-8")).hexdigest()
+    newDirectoryDownload = DOWNLOAD_DIRECTORY + '/' + unique_directory
+    path1 = os.path.join(newDirectoryDownload)
+    os.mkdir(path1)
+
+    zip1 = zipfile.ZipFile(uploaded_file)
+    archieveNames = zip1.namelist()
+    newArchiveNames = zip1.namelist()
+    archiveGrades = []
+    
+    i = 0
+    zipinfos = zip1.infolist()
+    for zipinfo in zipinfos:
+        unique_filename = archieveNames[i] + str(time.time())
+        unique_filename = MD5.new(unique_filename.encode("utf-8")).hexdigest()
+        zipinfo.filename = unique_filename + '.zip'
+        newArchiveNames[i] = unique_filename
+        zip1.extract(zipinfo, newDirectoryDownload)
+        i = i + 1
+    
+    
+    for i in range(len(archieveNames)):
+        full_path = os.path.join(newDirectoryDownload, newArchiveNames[i] + '.zip')
+        last_student_scanned = newArchiveNames[i]
+    
+        # Extract the uploaded archive
+        extraction_full_path = os.path.join(EXTRACTION_DIRECTORY, newArchiveNames[i])
+        os.makedirs(extraction_full_path)
+        with zipfile.ZipFile(full_path, "r") as zip_file:
+            zip_file.extractall(extraction_full_path)
+
+        # Get features
+        features = feature_extraction.retrain_data_one(extraction_full_path + "/")
+        features = preprocessor.transform_entry(features)
+
+        # Predict the grade
+        grade = predictor.predict([features])[0]
+        grade = round(grade, 2)
+
+        # Dump the grade into the specific CSV file
+        grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
+        grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
+        grades_df = grades_df[["label", "grade"]]
+        grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
+
+        archiveGrades.append(grade)
+
+
+    result = {"zipNames": archieveNames,"zipGrades": archiveGrades}
+    return jsonify(result)
+
 
 # Grade adjusting route
 @app.route("/adjust_grade", methods=["GET"])
@@ -81,8 +149,15 @@ def grade_adjustment_route():
 
     global last_student_scanned
 
+    global archieveNames, newArchiveNames
+
     # Get arguments
     adjusted_grade = request.args.get("adjusted_grade", type=float)
+    documentName = request.args.get("original_name")
+
+    for i in range(len(archieveNames)):
+        if archieveNames[i] == documentName:
+            last_student_scanned = newArchiveNames[i]
 
     # Save the adjusted grade into the labels file
     grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
