@@ -152,9 +152,17 @@ class Train:
 
 
 class Predictor:
-    def __init__(self, model_name=WEIGHTS_FILE):
+    def __init__(self, model):
+        model_name = ""
+        if (model == 1):
+            WEIGHTS_FILE = "../data/model.pt"
+            model_name = "../data/weights.apt"
+        else:
+            WEIGHTS_FILE = "../data/weights.apt"
+            model_name = "../data/model.pt"
 
         self.model = joblib.load(model_name)
+        print(model_name)
 
     # returns <class 'numpy.ndarray'>
     def predict(self, features):

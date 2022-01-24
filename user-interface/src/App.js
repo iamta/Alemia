@@ -15,6 +15,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 const API_BASE_ADDRESS = "http://127.0.0.1:3001"
 
@@ -26,7 +29,11 @@ class App extends React.Component {
         selected_filename_all: "Archive",
         predicted_grade: "NaN",
         adjusted_grade: "",
-        table_content: []
+        table_content_pytorch: [],
+        table_content_weights: [],
+        model: 1,
+        checked: false,
+        checked1: false
     }
 
     constructor(props) {
@@ -43,6 +50,8 @@ class App extends React.Component {
         this.sendChangeRequest = this.sendChangeRequest.bind(this)
         this.retrainModel = this.retrainModel.bind(this)
         this.restartGradingProcess = this.restartGradingProcess.bind(this)
+        this.handleChange1 = this.handleChange1.bind(this)
+        this.handleChange2 = this.handleChange2.bind(this)
 
     }
 
@@ -79,18 +88,40 @@ class App extends React.Component {
                 "Content-Type": "multipart/form-data"
             }
         }).then(response => {
-            let newTab = this.state.table_content;
-            response.data.predicted_grade.map((item) => (
+            if (this.state.model === 1) {
+                let newTab = this.state.table_content_pytorch;
                 newTab.push({
-                    grade: item
+                    grade: "New predict"
                 })
-            ));
+                response.data.predicted_grade.map((item) => (
+                    newTab.push({
+                        grade: item
+                    })
+                ));
 
-            this.setState({
-                current_step: 3,
-                selected_filename_all: event.target.files[0].name,
-                table_content: newTab
-            });
+                this.setState({
+                    current_step: 3,
+                    selected_filename_all: event.target.files[0].name,
+                    table_content_pytorch: newTab
+                });
+            }
+            else {
+                let newTab = this.state.table_content_weights;
+                newTab.push({
+                    grade: "New predict"
+                })
+                response.data.predicted_grade.map((item) => (
+                    newTab.push({
+                        grade: item
+                    })
+                ));
+
+                this.setState({
+                    current_step: 3,
+                    selected_filename_all: event.target.files[0].name,
+                    table_content_weights: newTab
+                });
+            }
             console.log(response.data.predicted_grade);
         }).catch(error => console.log(error));
 
@@ -99,6 +130,22 @@ class App extends React.Component {
     adjustGrade(event) {
         this.setState({
             adjusted_grade: event.target.value
+        })
+    }
+
+    handleChange1() {
+        this.setState({
+            model: 1,
+            checked: true,
+            checked1: false
+        })
+    }
+
+    handleChange2() {
+        this.setState({
+            model: 2,
+            checked: false,
+            checked1: true
         })
     }
 
@@ -117,6 +164,9 @@ class App extends React.Component {
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
+            },
+            params: {
+                model: this.state.model
             }
         }).catch(error => console.log(error));
     }
@@ -143,8 +193,7 @@ class App extends React.Component {
                 second_step_classes.push("current")
                 first_step_classes_all.push("innactive")
             }
-            else
-            {
+            else {
                 first_step_classes.push("innactive")
                 second_step_classes.push("innactive")
                 first_step_classes_all.push("done")
@@ -163,6 +212,25 @@ class App extends React.Component {
                         <img src="images/logo.png" alt="Naevia Logo"></img>
                         <h1>Alemia</h1>
                     </div>
+
+                    {/* Field for choosing model */}
+                    <Jumbotron>
+                        <h3>Model</h3>
+                        <p>Select the model you want to use.</p>
+                        <FormGroup>
+                            <FormControlLabel control={<Checkbox checked={this.state.checked} onChange={this.handleChange1} />} label="Basic model" />
+                            <FormControlLabel control={<Checkbox checked={this.state.checked1} onChange={this.handleChange2} />} label="Our model" />
+                        </FormGroup>
+                        <br></br>
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            block
+                            onClick={this.retrainModel}
+                        >
+                            Retrain the model
+                        </Button>
+                    </Jumbotron>
 
                     {/* Field for uploading a file */}
                     <Jumbotron className={first_step_classes}>
@@ -238,15 +306,34 @@ class App extends React.Component {
                     </Jumbotron>
 
                     {/* Display grades */}
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableContainer component={Paper} style={{display:"flex"}}>
+                        <Table sx={{ minWidth: 500 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Grades</TableCell>
+                                    <TableCell>Grades with basic model</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.table_content.map((row) => (
+                                {this.state.table_content_pytorch.map((row) => (
+                                    <TableRow
+                                        key={row.grade}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {row.grade}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                        <Table sx={{ minWidth: 500 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Grades with our model</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.table_content_weights.map((row) => (
                                     <TableRow
                                         key={row.grade}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -259,7 +346,6 @@ class App extends React.Component {
                             </TableBody>
                         </Table>
                     </TableContainer>
-
                 </Container>
 
             </div>

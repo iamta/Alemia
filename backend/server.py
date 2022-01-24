@@ -158,8 +158,11 @@ def grade_adjustment_route():
 @app.route("/retrain_model", methods=["GET"])
 def model_retraining_route():
 
+    # Get arguments
+    model = request.args.get("model", type=int)
+
     # Create a thread that retrain the model
-    Thread(target=retrain_model).start()
+    Thread(target=retrain_model(model)).start()
 
     # Return a result
     result = {"status": "ok"}
@@ -167,11 +170,11 @@ def model_retraining_route():
 
 
 # Function for retraining the machine learning model
-def retrain_model():
+def retrain_model(model):
     global predictor, preprocessor
 
     Train(check=True).train()
-    predictor = Predictor()
+    predictor = Predictor(model)
     preprocessor = Preprocessor()
 
     print("[+] Successfully retrained the model")
@@ -189,7 +192,7 @@ def main():
         Train(check=True).train()
 
     # Initialize some parts of the pipeline
-    predictor = Predictor()
+    predictor = Predictor(1)
     preprocessor = Preprocessor()
 
     # Run the web server

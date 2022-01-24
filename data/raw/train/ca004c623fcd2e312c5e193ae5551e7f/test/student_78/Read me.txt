@@ -1,9 +1,0 @@
-Pentru implementarea jocului, pe langa clasele precum ConsoleInput, consoleOutput,
-am implementat o interfata Idrawable din care am derivat entitatile jocului, Clasa Plant 
-din care am derivat Peashooter si Sunflower, Clasa CZombie din care am derivat BuckedHeadZombie si basic Zombie ul, 
-si clasa Sun.
-Numarul de zoimbie per runda este random <10 , fiecare zombie rezista la un numar dat de pea - uri dupa care dispar
-Sorii apar in locatii diferite, tot la un interval random de timp, iar un soare reprezinta 50 de pct.
-Peashooter care costa 100 de pucte(2 sori) trage cu proiectile pea, iar Sunflower-ul face ca soriii sa apara
-mai rapid in consola.
-Daca un zombie a ajuns in zona in care sunt afisate semintele (plantele) njocul este pierdut!

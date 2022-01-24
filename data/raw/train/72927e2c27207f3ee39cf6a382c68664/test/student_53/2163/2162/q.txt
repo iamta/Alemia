@@ -1,6 +1,0 @@
-q.txt		Tue Dec 24 10:11:55 2019
-
-A fost selectata planata cu numarul 0		Tue Dec 24 10:12:09 2019
-
-A fost plasata planata la pozitia 19		12		Tue Dec 24 10:12:10 2019
-
