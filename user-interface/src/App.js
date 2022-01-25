@@ -16,6 +16,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { MDBContainer } from "mdbreact";
+import { Bar } from "react-chartjs-2";
+
+import { Chart as ChartJS } from 'chart.js/auto'
+
 const API_BASE_ADDRESS = "http://127.0.0.1:3001"
 
 function createData(feature, number) {
@@ -30,7 +35,43 @@ class App extends React.Component {
         predicted_grade: "NaN",
         adjusted_grade: "",
         done: '0',
-        rows: []
+        rows: [],
+        filesData: {
+            labels: ["Header Files", "Source Files"],
+            datasets: [
+                {
+                    label: "Number of files",
+                    data: [0, 0],
+                    backgroundColor: "#02b844",
+                    borderWidth: 1,
+                    borderColor: "#000000",
+                }
+            ]
+        },
+        variablesData: {
+            labels: ["Static Variables", "Global Variables"],
+            datasets: [
+                {
+                    label: "Number of variables",
+                    data: [0, 0],
+                    backgroundColor: "#02b844",
+                    borderWidth: 1,
+                    borderColor: "#000000",
+                }
+            ]
+        },
+        paramsData: {
+            labels: ["Public Parameters", "Private Parameters"],
+            datasets: [
+                {
+                    label: "Number of parameters",
+                    data: [0, 0],
+                    backgroundColor: "#02b844",
+                    borderWidth: 1,
+                    borderColor: "#000000",
+                }
+            ]
+        }
     }
 
     constructor(props) {
@@ -97,7 +138,43 @@ class App extends React.Component {
                             createData('Headers size', response.data[0].headers_size),
                             createData('Sources size', response.data[0].sources_size)
                         ],
-                        done: 1
+                        done: 1,
+                        filesData: {
+                            labels: ["Header Files", "Source Files"],
+                            datasets: [
+                                {
+                                    label: "Number of files",
+                                    data: [response.data[0].nr_clase, response.data[0].nr_cpp],
+                                    backgroundColor: "#9575cd",
+                                    borderWidth: 1,
+                                    borderColor: "#000000",
+                                }
+                            ]
+                        },
+                        variablesData: {
+                            labels: ["Static Variables", "Global Variables"],
+                            datasets: [
+                                {
+                                    label: "Number of variables",
+                                    data: [response.data[0].nr_static, response.data[0].nr_global],
+                                    backgroundColor: "#9575cd",
+                                    borderWidth: 1,
+                                    borderColor: "#000000",
+                                }
+                            ]
+                        },
+                        paramsData: {
+                            labels: ["Public Parameters", "Private Parameters"],
+                            datasets: [
+                                {
+                                    label: "Number of parameters",
+                                    data: [response.data[0].nr_public, response.data[0].nr_static],
+                                    backgroundColor: "#9575cd",
+                                    borderWidth: 1,
+                                    borderColor: "#000000",
+                                }
+                            ]
+                        }
                     })
                 })
             );
@@ -224,27 +301,49 @@ class App extends React.Component {
                     </Jumbotron>
 
                     {this.state.done === 1 ? (
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableCell className="header">Feature</TableCell>
-                                    <TableCell className="header" align="right">Number</TableCell>
-                                </TableHead>
-                                <TableBody>
-                                    {this.state.rows.map((row) => (
-                                        <TableRow
-                                            key={row.feature}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {row.feature}
-                                            </TableCell>
-                                            <TableCell align="right">{row.number}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                        <div>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                    <TableHead>
+                                        <TableCell className="header">Feature</TableCell>
+                                        <TableCell className="header" align="right">Number</TableCell>
+                                    </TableHead>
+                                    <TableBody>
+                                        {this.state.rows.map((row) => (
+                                            <TableRow
+                                                key={row.feature}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    {row.feature}
+                                                </TableCell>
+                                                <TableCell align="right">{row.number}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+
+                            <MDBContainer>
+                                <Bar data={this.state.filesData}
+                                    style={{ maxHeight: '400px' }}
+                                />
+                            </MDBContainer>
+
+                            <br></br><MDBContainer>
+                                <Bar data={this.state.variablesData}
+                                    style={{ maxHeight: '400px' }}
+                                />
+                            </MDBContainer>
+
+                            <br></br><MDBContainer>
+                                <Bar data={this.state.paramsData}
+                                    style={{ maxHeight: '400px' }}
+                                />
+                            </MDBContainer>
+
+                        </div>
+
                     )
                         :
                         <h1>Add archive to see statistics</h1>
