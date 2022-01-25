@@ -40,10 +40,8 @@ def preprocess_datas(src_dir, dest_dir):
         elif (filename.endswith(".cpp")):
             shutil.copy2(filename,
                          dest_dir + my_dir + "/sources/" + fields[-1])
-        # Ignore if 'debug' or '.' in name
-        elif ('debug' in filename.lower() or '.' in fields):
-            continue
-        else:
+        # Ignore if it is a directory
+        elif not os.path.isdir(filename):
             shutil.copy2(filename, dest_dir + my_dir + "/rest/" + fields[-1])
 
     return newfiles
