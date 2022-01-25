@@ -16,7 +16,7 @@ from train import Train, Predictor
 DOWNLOAD_DIRECTORY = "uploads"
 EXTRACTION_DIRECTORY = "../data/raw/train"
 GRADES_CSV_FILENAME = "../data/grades.csv"
-INIT_DATASET = False
+INIT_DATASET = True
 TRAIN_MODEL = True
 
 last_student_scanned = None
