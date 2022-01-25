@@ -4,7 +4,9 @@ import shutil
 import re
 import zipfile
 import subprocess
-
+import CppHeaderParser
+from project_metadata import ProjectMetadata
+from collections import Counter
 
 def create_dir(path):
     if not (os.path.isdir(path)):
@@ -57,6 +59,10 @@ def get_regex_counts(filename, regex_pattern):
 
 def create_csv(trainDir, outfilename, students):
     output = open(outfilename, "w")
+    projectMetadata = ProjectMetadata()
+
+    #list of keywords
+    keywords = ['sizeof', 'break', 'case', 'char', 'continue', 'do', 'default', 'while', 'double', 'int', 'struct', 'switch', 'else', 'long', 'return', 'for', 'void', 'if', 'float', 'static', 'typedef']
 
     output.write(
         "nr_crt,label,nr_clase,nr_errors,nr_inheritance,nr_virtual,nr_static,")
@@ -80,6 +86,12 @@ def create_csv(trainDir, outfilename, students):
 
         class_number = len(headers)
         sources_number = len(sources)
+
+        #append sources, headers and files count to metadata
+        projectMetadata.sourcesCount += sources_number
+        projectMetadata.headersCount += class_number
+        projectMetadata.filesCount += sources_number + class_number
+
 
         if not (os.path.isfile(trainDir + std + "/codying_style.txt")):
             command = ["cpplint", "--recursive", local_dir + "/sources/"]
@@ -111,6 +123,12 @@ def create_csv(trainDir, outfilename, students):
         struct_pattern = re.compile(r"W*(stuct)\W*")
         function_pattern = re.compile(r"\W*(\(\))\W*")
 
+        keywords_pattern = {}
+
+        for keyword in keywords:
+            keywords_pattern[keyword] = re.compile("\W*(" + keyword + ")\W*")
+            projectMetadata.keyWordsList[keyword] = 0
+
         inheritance_count = 0
         virtual_count = 0
         static_count = 0
@@ -127,45 +145,121 @@ def create_csv(trainDir, outfilename, students):
         enum_count = 0
         struct_count = 0
         function_count = 0
+        constructor_count = 0
+        destructor_count = 0
+        constructor_param = 0
+        default_constructor = 0
+        pureVirtualMethodsCount = 0
+        overloadingFunctionsCount = 0
+        abstract_count = 0
+        multipleInheritanceCount = 0
+        copyConstructorCount = 0
+        moveConstructorCount = 0
+        publicMethodsCount = 0
+        privateMethodsCount = 0
+        protectedMethodsCount = 0
+        interfacesCount = 0
+        
 
         sources_size = 0
         headers_size = 0
         for source in sources:
-            sources_size += os.path.getsize(local_dir + "/sources/" + source)
-
+            sourceHeader = local_dir + "/sources/" + source
+            projectMetadata.sourcesLinesCount += sum(1 for line in open(sourceHeader, "rb"))
+            sources_size += os.path.getsize(sourceHeader)
+            
+            #get numbers of keywords in source files
+            for key in keywords_pattern:
+                keywords_count = get_regex_counts(sourceHeader, keywords_pattern[key])
+                projectMetadata.keyWordsList[key] += keywords_count
+        
         for header in headers:
-            inheritance_count += get_regex_counts(
-                local_dir + "/headers/" + header, inheritance_pattern)
-            virtual_count += get_regex_counts(local_dir + "/headers/" + header,
-                                              virtual_pattern)
-            static_count += get_regex_counts(local_dir + "/headers/" + header,
-                                             static_pattern)
-            global_count += get_regex_counts(local_dir + "/headers/" + header,
-                                             global_pattern)
-            public_count += get_regex_counts(local_dir + "/headers/" + header,
-                                             public_pattern)
-            private_count += get_regex_counts(local_dir + "/headers/" + header,
-                                              private_pattern)
-            protected += get_regex_counts(local_dir + "/headers/" + header,
-                                          protected_pattern)
-            define_count += get_regex_counts(local_dir + "/headers/" + header,
-                                             define_pattern)
-            template_count += get_regex_counts(
-                local_dir + "/headers/" + header, template_pattern)
-            stl_count += get_regex_counts(local_dir + "/headers/" + header,
-                                          stl_pattern)
-            namespace_count += get_regex_counts(
-                local_dir + "/headers/" + header, namespace_pattern)
-            comments_count += get_regex_counts(
-                local_dir + "/headers/" + header, comments_pattern)
-            enum_count += get_regex_counts(local_dir + "/headers/" + header,
-                                           enum_pattern)
-            struct_count += get_regex_counts(local_dir + "/headers/" + header,
-                                             struct_pattern)
+            headerPath = local_dir + "/headers/" + header
 
-            function_count += get_regex_counts(
-                local_dir + "/headers/" + header, function_pattern)
-            headers_size += os.path.getsize(local_dir + "/headers/" + header)
+            #get number of contructors
+            cppHeader = CppHeaderParser.CppHeader(headerPath)
+
+            #get numbers of constructors, destructors and constructors with parameters
+            for classname in cppHeader.classes.keys():
+                pureVirtualMethodsPerClass = 0
+                #number of public Methods
+                publicMethodsCount += len(cppHeader.classes[classname]['methods']['public'])
+                privateMethodsCount += len(cppHeader.classes[classname]['methods']['private'])
+                protectedMethodsCount += len(cppHeader.classes[classname]['methods']['protected'])
+
+                for oneMethod in cppHeader.classes[classname]['methods']['public']:
+                    if oneMethod['name'] == classname:
+                        if oneMethod['constructor'] == True:
+                            constructor_count += 1
+                            if len(oneMethod['parameters']):
+                                constructor_param += 1
+                            else:
+                                default_constructor += 1
+                            if len(oneMethod['parameters']) == 1:
+                                if ((classname + " &") == oneMethod['parameters'][0]['type']) or (("const " + classname + " &") == oneMethod['parameters'][0]['type']):
+                                    #print(oneMethod['parameters'][0]['type'])
+                                    copyConstructorCount += 1
+                                if ((classname + " & &") == oneMethod['parameters'][0]['type']):
+                                    #print(oneMethod['parameters'][0]['type'])
+                                    moveConstructorCount += 1
+                    if oneMethod['destructor'] == True:
+                            destructor_count += 1
+                    if oneMethod['operator'] != False:
+                        projectMetadata.overloadedOperatorsList[oneMethod['operator']] = 'Found'
+                
+                #get all pure virtual methods
+                pureVirtualMethods = cppHeader.classes[classname].get_all_pure_virtual_methods()
+                pureVirtualMethodsPerClass = len(pureVirtualMethods)
+                pureVirtualMethodsCount += pureVirtualMethodsPerClass
+
+                #number of interfaces
+                if len(cppHeader.classes[classname]['methods']) == pureVirtualMethodsPerClass:
+                    interfacesCount += 1
+
+                #get number of overloaded functions
+                overloadingMethods = cppHeader.classes[classname].get_all_method_names()
+                dictionaryOverloading = Counter(overloadingMethods)
+                for key in dictionaryOverloading:
+                    if dictionaryOverloading[key] > 2:
+                        overloadingFunctionsCount += 1
+
+                #get number of abstract classes
+                abstract_count += cppHeader.classes[classname]['abstract']
+
+                #get number of class derived from multiple classes
+                #list of classes that this inherits
+                inheritsClassesList = cppHeader.classes[classname]['inherits']
+                #print(inheritsClassesList)
+                if len(inheritsClassesList) > 1:
+                    multipleInheritanceCount += 1
+
+                        
+
+            projectMetadata.headersLinesCount += sum(1 for line in open(headerPath, "rb"))
+
+            inheritance_count += get_regex_counts(headerPath, inheritance_pattern)
+            virtual_count += get_regex_counts(headerPath, virtual_pattern)
+            static_count += get_regex_counts(headerPath, static_pattern)
+            global_count += get_regex_counts(headerPath, global_pattern)
+            public_count += get_regex_counts(headerPath, public_pattern)
+            private_count += get_regex_counts(headerPath, private_pattern)
+            protected += get_regex_counts(headerPath, protected_pattern)
+            define_count += get_regex_counts(headerPath, define_pattern)
+            template_count += get_regex_counts(headerPath, template_pattern)
+            stl_count += get_regex_counts(headerPath, stl_pattern)
+            namespace_count += get_regex_counts(headerPath, namespace_pattern)
+            comments_count += get_regex_counts(headerPath, comments_pattern)
+            enum_count += get_regex_counts(headerPath, enum_pattern)
+            struct_count += get_regex_counts(headerPath, struct_pattern)
+
+            #get numbers of keywords in header files
+            for key in keywords_pattern:
+                keywords_count = get_regex_counts(headerPath, keywords_pattern[key])
+                projectMetadata.keyWordsList[key] += keywords_count
+
+            function_count += get_regex_counts(headerPath, function_pattern)
+            headers_size += os.path.getsize(headerPath)
+                
 
         to_Write = []
         to_Write.append(nrCrt)
@@ -191,6 +285,28 @@ def create_csv(trainDir, outfilename, students):
         to_Write.append(headers_size)
         to_Write.append(sources_size)
 
+        #append informations to metadata object
+        projectMetadata.classesCount += class_number
+        projectMetadata.derivedClassesCount += inheritance_count
+        projectMetadata.virtualFunctionsCount += virtual_count
+        projectMetadata.privateMethodsCount += privateMethodsCount
+        projectMetadata.publicMethodsCount += publicMethodsCount
+        projectMetadata.protectedMethodsCount += protectedMethodsCount
+        projectMetadata.stlElementsCount += stl_count
+        projectMetadata.templateClassesCount += template_count
+        projectMetadata.linesCount += projectMetadata.headersLinesCount + projectMetadata.sourcesLinesCount
+        projectMetadata.constructorsCount += constructor_count
+        projectMetadata.destructorsCount += destructor_count
+        projectMetadata.parametersConstructorCount += constructor_param
+        projectMetadata.defaultConstructorsCount += default_constructor
+        projectMetadata.pureVirtualFunctionsCount += pureVirtualMethodsCount
+        projectMetadata.overloadedFunctionsCount += overloadingFunctionsCount
+        projectMetadata.abstractClassesCount += abstract_count
+        projectMetadata.multipleDerivedClassesCount += multipleInheritanceCount
+        projectMetadata.copyConstructorsCount += copyConstructorCount
+        projectMetadata.moveConstructorsCount += moveConstructorCount
+        projectMetadata.interfacesCount += interfacesCount
+
         for w in to_Write:
             output.write(str(w) + ",")
         output.write("\n")
@@ -198,6 +314,9 @@ def create_csv(trainDir, outfilename, students):
         nrCrt += 1
 
     output.close()
+
+    #todo: replace this with a filled object
+    return projectMetadata
 
 
 def extract_zip(zipPath, destPath, scope):
@@ -267,14 +386,15 @@ def retrain_data_one(path_to_new_label):
         if (label == newLabel[0]):
             newLabels.append(label)
 
-    create_csv(trainDir, "../data/featuresRetrained.csv", newLabels)
+    filesMetadata = create_csv(trainDir, "../data/featuresRetrained.csv", newLabels)
     new_data = merge_csv("../data/featuresRetrained.csv",
                          "../data/features.csv")
     os.remove("../data/featuresRetrained.csv")
 
     new_data = (new_data[0].split(","))[1:-1]
 
-    return new_data
+    # returns new data and metadata about the uploaded project
+    return { "new_data" : new_data, "files_metadata" : filesMetadata }
 
 
 def add_new_line_csv(csv_file, data):

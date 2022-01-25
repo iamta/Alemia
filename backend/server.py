@@ -57,8 +57,8 @@ def predict_route():
         zip_file.extractall(extraction_full_path)
 
     # Get features
-    features = feature_extraction.retrain_data_one(extraction_full_path + "/")
-    features = preprocessor.transform_entry(features)
+    retrainResult = feature_extraction.retrain_data_one(extraction_full_path + "/")
+    features = preprocessor.transform_entry(retrainResult['new_data'])
 
     # Predict the grade
     grade = predictor.predict([features])[0]
@@ -71,7 +71,7 @@ def predict_route():
     grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
 
     # Return a result
-    result = {"predicted_grade": grade}
+    result = {"predicted_grade": grade, "metadata" : retrainResult["files_metadata"].toDictionary() }
     return jsonify(result)
 
 

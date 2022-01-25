@@ -7,3 +7,4 @@ Flask==1.1.2
 pycryptodome==3.9.9
 joblib==0.17.0
 cpplint==1.5.4
+CppHeaderParser

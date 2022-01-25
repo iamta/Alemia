@@ -1,12 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Damion&display=swap');
 
 .App{
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%);
-    text-align: center;
-    z-index: 1000;
+     
 }
 
 .App .logo-container{
@@ -42,4 +37,8 @@
 
 .App .process-step.inactive{
     border-color: #353b48;
+}
+
+.App .hide{
+    display: none;
 }
