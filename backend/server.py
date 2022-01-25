@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
+from operator import rshift
+import re
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from Crypto.Hash import MD5
 from threading import Thread
 import pandas
+import csv
 import zipfile
 import os
 import time
@@ -16,6 +19,7 @@ from train import Train, Predictor
 DOWNLOAD_DIRECTORY = "uploads"
 EXTRACTION_DIRECTORY = "../data/raw/train"
 GRADES_CSV_FILENAME = "../data/grades.csv"
+FEATURES_CSV_FILENAME = "../data/features.csv"
 INIT_DATASET = False
 TRAIN_MODEL = True
 
@@ -32,6 +36,21 @@ CORS(app)
 @app.route("/")
 def default_route():
     return "Alemia API\n"
+
+# Prediction route
+@app.route("/return_statistics", methods=["GET"])
+def statistics_route():
+
+    # Get features from specific CSV file
+
+    fields = ['nr_clase','nr_errors','nr_inheritance','nr_virtual','nr_static','nr_global','nr_public','nr_private','nr_protected','nr_define','nr_template','nr_stl','nr_namespace','nr_enum','nr_struct','nr_cpp','nr_comments','nr_function','headers_size','sources_size']
+
+    features_df = pandas.read_csv(FEATURES_CSV_FILENAME, skipinitialspace=True, usecols=fields)
+    
+    tail = features_df.tail(1)
+
+    # Return a result
+    return tail.to_json(orient ='records')
 
 
 # Prediction route

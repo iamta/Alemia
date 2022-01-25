@@ -108,7 +108,7 @@ def create_csv(trainDir, outfilename, students):
         namespace_pattern = re.compile(r"\W*(namespace)\W*")
         comments_pattern = re.compile(r"\W*(/\*)|(//)\W*")
         enum_pattern = re.compile(r"\W*(enum)\W*")
-        struct_pattern = re.compile(r"W*(stuct)\W*")
+        struct_pattern = re.compile(r"W*(struct)\W*")
         function_pattern = re.compile(r"\W*(\(\))\W*")
 
         inheritance_count = 0
