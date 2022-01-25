@@ -27,6 +27,16 @@ npm install
 npm start
 ```
 
+4. do configuration for user interface
+
+``` 
+cd user-interface/src/config
+
+File default.config.json contains configuration for user-interface server. Allowed keys:
+- python_sever_address: represents the python backend server which will be consumed by user-interface
+
+```
+
 ## Resources
 
 ### User Interface

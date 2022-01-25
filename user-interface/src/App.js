@@ -7,9 +7,10 @@ import {
     Button
 } from "react-bootstrap"
 import axios from "axios"
+import appConfig from "./config/default.config.json" 
 import "./stylesheets/App.css"
 
-const API_BASE_ADDRESS = "http://127.0.0.1:3001"
+const API_BASE_ADDRESS = appConfig.python_sever_address; // "http://127.0.0.1:3001"
 
 class App extends React.Component{
 
