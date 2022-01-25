@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.LibrarianControllers.SeeAccountDetailsController">
+    <Label alignment="CENTER" prefHeight="60.0" prefWidth="650.0" styleClass="librarian-label" text="Detalii cont" textAlignment="CENTER" textOverrun="CLIP" />
+   <Label layoutX="98.0" layoutY="198.0" text="Username:" textFill="WHITE" />
+   <Label layoutX="98.0" layoutY="151.0" text="ID:" textFill="#f2f2f2" />
+   <Label layoutX="98.0" layoutY="241.0" text="Nume:" textFill="#fafafa" />
+   <Label layoutX="98.0" layoutY="281.0" text="Prenume:" textFill="WHITE" />
+   <Label layoutX="98.0" layoutY="330.0" text="CNP:" textFill="WHITE" />
+   <Label layoutX="98.0" layoutY="379.0" text="Data nasterii:" textFill="WHITE" />
+   <Label fx:id="idLabel" layoutX="259.0" layoutY="151.0" text="" textFill="#f2f2f2">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="usernameLabel" layoutX="259.0" layoutY="194.0" text="" textFill="#f2f2f2">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="prenumeLabel"  layoutX="259.0" layoutY="237.0" text="" textFill="#f2f2f2">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="numeLabel" layoutX="259.0" layoutY="277.0" text="" textFill="#f2f2f2">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="CNPLabel" layoutX="259.0" layoutY="326.0" text="" textFill="#f2f2f2">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="dataNastereLabel" layoutX="259.0" layoutY="375.0" text="" textFill="#f2f2f2">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+
+
+
+
+</AnchorPane>

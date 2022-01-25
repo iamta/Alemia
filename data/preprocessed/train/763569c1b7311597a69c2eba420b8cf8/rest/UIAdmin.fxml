@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="267.0" prefWidth="414.0" stylesheets="@../../../../style.css"
+            xmlns="http://javafx.com/javafx/17" fx:controller="ro.mta.library_project.Controllers.AdminControllers.UIAdminController">
+    <children>
+        <Button fx:id="logoutButton" layoutX="220.0" layoutY="197.0" mnemonicParsing="false"
+                onAction="#handleLogoutButtonAction" prefHeight="60.0" prefWidth="180.0" styleClass="login-button"
+                text="Logout">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Label prefHeight="40.0" prefWidth="40.0" styleClass="static_text-label" text="  ID: "
+               AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="labelPentruID" layoutX="40.0" layoutY="1.0" prefHeight="38.0" prefWidth="40.0"
+                   AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="0.0"/>
+        <Button fx:id="creareContButton" layoutX="220.0" layoutY="56.0" mnemonicParsing="false"
+                onAction="#handleCreareContButtonAction" prefHeight="60.0" prefWidth="180.0" styleClass="login-button"
+                text="Creare/Stergere Cont">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="modificareContButton" layoutX="220.0" layoutY="126.0" mnemonicParsing="false"
+                onAction="#handleModificareContButtonAction" prefHeight="60.0" prefWidth="180.0"
+                styleClass="login-button" text="Modificare Cont">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="vizualizareConturiButton" layoutX="14.0" layoutY="56.0" mnemonicParsing="false"
+                onAction="#handleVizualizareConturiButtonAction" prefHeight="60.0" prefWidth="180.0"
+                styleClass="login-button" text="Conturi">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="vizualizareLoguriActiuniButton" layoutX="14.0" layoutY="126.0" mnemonicParsing="false"
+                onAction="#handleVizualizareLoguriActiuniButtonAction" prefHeight="60.0" prefWidth="180.0"
+                styleClass="login-button" text="Log-uri Actiuni">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="vizualizareLoguriLoginLogoutButton" layoutX="14.0" layoutY="197.0" mnemonicParsing="false"
+                onAction="#handleVizualizareLoguriLoginLogoutButtonAction" prefHeight="60.0" prefWidth="180.0"
+                styleClass="login-button" text="Log-uri Login/Logout">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0"
+            prefWidth="650.0" stylesheets="@../../../../style.css"
+            xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ro.mta.library_project.Controllers.LibrarianControllers.AddBookController">
+
+    <Label alignment="CENTER" prefHeight="60.0" prefWidth="650.0" styleClass="librarian-label" text="Adauga o carte!" textAlignment="CENTER" textOverrun="CLIP" />
+    <Label layoutX="172.0" layoutY="72.0" text="Introduceti valori pentru urmatoarele campuri:" textFill="#f5f5f5">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+   <TextField fx:id="title_book" layoutX="202.0" layoutY="103.0" prefHeight="38.0" prefWidth="268.0" promptText="titlul" />
+   <Label layoutX="52.0" layoutY="107.0" prefHeight="30.0" prefWidth="64.0" text="Titlu:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <Label layoutX="53.0" layoutY="151.0" prefHeight="30.0" prefWidth="126.0" text="Prenume autor:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <TextField fx:id="firstname_author" layoutX="202.0" layoutY="147.0" prefHeight="38.0" prefWidth="268.0" promptText="prenume autor" />
+   <Label layoutX="52.0" layoutY="193.0" prefHeight="30.0" prefWidth="147.0" text="Nume autor:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <Label layoutX="52.0" layoutY="235.0" prefHeight="30.0" prefWidth="147.0" text="Numar pagini:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <Label layoutX="52.0" layoutY="280.0" prefHeight="30.0" prefWidth="147.0" text="Data publicatiei:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <Label layoutX="53.0" layoutY="326.0" prefHeight="30.0" prefWidth="147.0" text="Data achizitiei:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <Label layoutX="53.0" layoutY="376.0" prefHeight="30.0" prefWidth="147.0" text="Tipul:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <Label layoutX="52.0" layoutY="421.0" prefHeight="30.0" prefWidth="147.0" text="Sectiunea:" textFill="WHITE">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+   <TextField fx:id="secondname_author" layoutX="202.0" layoutY="189.0" prefHeight="38.0" prefWidth="268.0" promptText="nume autor" />
+   <TextField fx:id="pages" layoutX="202.0" layoutY="235.0" prefHeight="38.0" prefWidth="268.0" promptText="pagini" />
+   <TextField fx:id="publishdate" layoutX="202.0" layoutY="280.0" prefHeight="38.0" prefWidth="268.0" promptText="de forma AAAA-LL-ZZ" />
+   <TextField fx:id="acquisitiondate" layoutX="202.0" layoutY="326.0" prefHeight="38.0" prefWidth="268.0" promptText="de forma AAAA-LL-ZZ" />
+   <TextField fx:id="type_book" layoutX="202.0" layoutY="372.0" prefHeight="38.0" prefWidth="268.0" promptText="1-electronica 2-fizica 3-arhiva" />
+   <TextField fx:id="section_book" layoutX="202.0" layoutY="417.0" prefHeight="38.0" prefWidth="268.0" promptText="sectiunea la alegere din dreapta" />
+   <Button layoutX="511.0" onAction="#doAddBook" layoutY="109.0" mnemonicParsing="false" text="Adauga" styleClass="login-button" textAlignment="CENTER"/>
+   <Label layoutX="488.0" layoutY="203.0" prefHeight="245.0" prefWidth="119.0" text="Sectiuni: 1-beletristica, 2-manuale, 3-atlase, 4-diploma, 5-disertatie, 6-doctorat " textFill="WHITE" wrapText="true">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+    
+
+</AnchorPane>

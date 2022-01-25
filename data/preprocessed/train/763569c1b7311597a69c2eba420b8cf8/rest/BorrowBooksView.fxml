@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="527.0" prefWidth="952.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.BorrowBooksController">
+    <children>
+        <Label prefHeight="48.0" prefWidth="952.0" styleClass="news-label" text=" Carti imprumutate" />
+        <TableView fx:id="tbData" accessibleRole="BUTTON" editable="true" layoutX="18.0" layoutY="63.0" prefHeight="378.0" prefWidth="920.0">
+            <columns>
+                <TableColumn fx:id="bookId" prefWidth="87.0" text="Id carte" />
+                <TableColumn fx:id="name" prefWidth="163.0" text="Nume" />
+                <TableColumn fx:id="author" prefWidth="169.0" text="Autor" />
+                <TableColumn fx:id="type" prefWidth="152.0" text="Tip" />
+                <TableColumn fx:id="section" prefWidth="154.0" text="Sectiune" />
+                <TableColumn fx:id="returnDate" prefWidth="191.0" text="Data retur" />
+                <TableColumn fx:id="code" prefWidth="191.0" text="Cod imprumut" />
+            </columns>
+        </TableView>
+      <Button fx:id="returnButton" layoutX="823.0" layoutY="453.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="115.0" text="Returneaza" onAction="#returnBook"/>
+      <Label fx:id="returnLabel" layoutX="25.0" layoutY="453.0" prefHeight="36.0" prefWidth="751.0" text="" styleClass="user-label"/>
+
+    </children>
+</AnchorPane>

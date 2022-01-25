@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="791.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.LibrarianControllers.SeeInfoBooks">
+
+        <children>
+            <Label fx:id="LabelPentruText" alignment="CENTER" layoutX="110.0" layoutY="100.0" prefHeight="99.0" prefWidth="378.0" text="UI Librarian" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutY="-1.0" prefHeight="62.0" prefWidth="791.0" styleClass="librarian-label" text="Carti existente in biblioteca" textAlignment="CENTER" textOverrun="CLIP" />
+           <!-- <Button layoutX="569.0" layoutY="460.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" styleClass="login-button" text="OK" textAlignment="CENTER" />-->
+            <TableView fx:id="myTableViewSeeBooks" layoutX="10.0" layoutY="63.0" prefHeight="334.0" prefWidth="635.0" styleClass="container" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="63.0">
+                <columns>
+                    <TableColumn fx:id="ID" prefWidth="30.0" text="Id carte" />
+                    <TableColumn fx:id="title" prefWidth="215.20000839233398" text="Titlu" />
+                    <TableColumn fx:id="publishingDate" minWidth="0.0" prefWidth="103.80001831054688" text="Data publicarii" />
+                    <TableColumn fx:id="genre" minWidth="0.0" prefWidth="117.4000244140625" text="sectiune" />
+                    <TableColumn fx:id="numberPages" minWidth="2.399993896484375" prefWidth="47.399993896484375" text="nr. pag." />
+                    <TableColumn fx:id="idAuthor" prefWidth="44.0" text="ID Autor" />
+                    <TableColumn fx:id="firstname" prefWidth="108.5999755859375" text="Prenume" />
+                    <TableColumn fx:id="lastname" prefWidth="108.5999755859375" text="Nume" />
+                </columns>
+            </TableView>
+        </children>
+</AnchorPane>

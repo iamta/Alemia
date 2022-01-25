@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.LibrarianControllers.SeeBorrowedBooksController">
+    <Label alignment="CENTER" prefHeight="60.0" prefWidth="650.0" styleClass="librarian-label" text="Vezi ce carti sunt imprumutate!" textAlignment="CENTER" textOverrun="CLIP" />
+    <TableView fx:id="myTableViewSeeBooks" layoutX="10.0" layoutY="63.0" prefHeight="334.0" prefWidth="635.0" styleClass="container" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="63.0">
+        <columns>
+            <TableColumn fx:id="idCarte" prefWidth="52.799988746643066" text="Id carte" />
+            <TableColumn fx:id="titluCarte" minWidth="0.0" prefWidth="429.6000175476074" text="Titlu carte" />
+            <TableColumn fx:id="nrPages" minWidth="0.0" prefWidth="155.19998168945312" text="Numar pagini" />
+        </columns>
+    </TableView>
+</AnchorPane>

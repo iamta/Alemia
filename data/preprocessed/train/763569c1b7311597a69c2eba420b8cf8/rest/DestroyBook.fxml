@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0"
+            prefWidth="650.0" stylesheets="@../../../../style.css"
+            xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ro.mta.library_project.Controllers.LibrarianControllers.DestroyBookController">
+
+    <Label alignment="CENTER" prefHeight="60.0" prefWidth="650.0" styleClass="librarian-label" text="Sterge o carte dupa ID!" textAlignment="CENTER" textOverrun="CLIP" />
+   <Label layoutX="117.0" layoutY="87.0" prefHeight="27.0" prefWidth="157.0" text="Introdu id-ul:" textFill="#f2f2f2">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextField fx:id="id_delete" layoutX="272.0" layoutY="82.0" prefHeight="38.0" prefWidth="100.0" promptText="id" />
+
+    <ListView fx:id="listOfBooks" layoutX="117.0" layoutY="215.0" prefHeight="227.0" prefWidth="415.0" />
+    <Button fx:id="booksButton" layoutX="230.0" layoutY="163.0" mnemonicParsing="false" onAction="#print" styleClass="login-button" text="Vizualizeaza Carti si id-urile lor" />
+   <Button fx:id="booksButton1" layoutX="432.0" layoutY="85.0" mnemonicParsing="false" onAction="#delete" styleClass="login-button" text="Sterge" />
+
+
+
+</AnchorPane>

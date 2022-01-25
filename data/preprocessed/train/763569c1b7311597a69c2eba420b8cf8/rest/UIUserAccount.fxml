@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="456.0" prefWidth="719.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.UIUserAccountController">
+    <children>
+        <Button layoutX="613.0" layoutY="397.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="96.0" styleClass="login-button" text="Back" />
+        <Label prefHeight="55.0" prefWidth="742.0" styleClass="news-label" text="Detalii cont" />
+        <GridPane layoutX="14.0" layoutY="98.0" prefHeight="188.0" prefWidth="233.0" styleClass="user_grid">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label styleClass="user-label" text="Id utilizator" />
+                <Label styleClass="user-label" text="Nume" GridPane.rowIndex="1" />
+                <Label styleClass="user-label" text="Prenume" GridPane.rowIndex="2" />
+                <Label styleClass="user-label" text="Data nastere" GridPane.rowIndex="3" />
+                <Label styleClass="user-label" text="CNP" GridPane.rowIndex="4" />
+                <Label styleClass="user-label" text="Username" GridPane.rowIndex="5" />
+                <Label id="idLabel" fx:id="idLabel" styleClass="user-label" text="NULL" GridPane.columnIndex="1" />
+                <Label id="numeLabel" fx:id="numeLabel" styleClass="user-label" text="NULL" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label id="prenumeLabel" fx:id="prenumeLabel" styleClass="user-label" text="NULL" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label id="dataNastereLabel" fx:id="dataNastereLabel" styleClass="user-label" text="NULL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label id="CNPLabel" fx:id="CNPLabel" styleClass="user-label" text="NULL" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label id="usernameLabel" fx:id="usernameLabel" styleClass="user-label" text="NULL" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

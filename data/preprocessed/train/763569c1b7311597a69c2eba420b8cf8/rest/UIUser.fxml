@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane accessibleText="Cauta..." prefHeight="554.0" prefWidth="858.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.UIUserController">
+    <children>
+        <Label fx:id="accountLabel" layoutY="-1.0" prefHeight="47.0" prefWidth="858.0" styleClass="news-label" text="Bine ai venit in contul tau, nume!" textOverrun="CLIP" />
+
+        <MenuBar fx:id="menuBar" layoutX="752.0" layoutY="79.0" onKeyPressed="#handleKeyInput" prefHeight="31.0" prefWidth="76.0">
+            <menus>
+                <Menu text="Meniu">
+                    <items>
+                        <MenuItem onAction="#handleMyAccount" text="Contul meu" />
+                        <MenuItem onAction="#handleAllBooks" text="Carti disponibile" />
+                        <MenuItem onAction="#handleNews" text="Stiri" />
+                        <MenuItem onAction="#handleActivity" text="Activitate anterioara" />
+                        <MenuItem onAction="#handleBorrowBooks" text="Carti imprumutate" />
+                        <MenuItem onAction="#handleViewElectronicBook" text="Vizualizare carte electronica" />
+                        <SeparatorMenuItem />
+                        <MenuItem onAction="#handleViewExit" text="Exit" />
+                    </items>
+                </Menu>
+            </menus>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+        </MenuBar>
+        <TextField fx:id="searchBookField" layoutX="187.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="38.0" prefWidth="225.0" />
+        <Button fx:id="searchButton" layoutX="439.0" layoutY="80.0" mnemonicParsing="false" onAction="#searchBookFunction" prefHeight="31.0" prefWidth="54.0" styleClass="login-button" text="OK" />
+        <TableView fx:id="tbData" accessibleRole="BUTTON" editable="true" layoutX="44.0" layoutY="163.0" prefHeight="332.0" prefWidth="789.0">
+            <columns>
+                <TableColumn fx:id="bookId" prefWidth="87.0" text="Id carte" />
+                <TableColumn fx:id="name" prefWidth="163.0" text="Nume" />
+                <TableColumn fx:id="author" prefWidth="169.0" text="Autor" />
+                <TableColumn fx:id="type" prefWidth="152.0" text="Tip" />
+                <TableColumn fx:id="section" prefWidth="154.0" text="Sectiune" />
+            </columns>
+        </TableView>
+        <Button fx:id="logoutButton" layoutX="663.0" layoutY="78.0" mnemonicParsing="false" onAction="#handleLogoutButtonAction" prefHeight="31.0" prefWidth="66.0" text="Logout" textFill="#000000f5">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+        <Label fx:id="logoutLabel" layoutX="44.0" layoutY="129.0" prefHeight="34.0" prefWidth="269.0" styleClass="user-label" text="Cartile disponibile in biblioteca" />
+      <Button fx:id="borrowButton" layoutX="729.0" layoutY="502.0" mnemonicParsing="false" onAction="#borrowBooksMethod" prefHeight="38.0" prefWidth="99.0" text="Imprumuta" />
+      <Label fx:id="testLabel" layoutX="44.0" layoutY="495.0" prefHeight="34.0" prefWidth="536.0" styleClass="user-label" text="" />
+      <ComboBox fx:id="filtersCombo" layoutX="14.0" layoutY="76.0" prefHeight="38.0" prefWidth="165.0" />
+        
+    </children>
+   <effect>
+      <Blend />
+   </effect>
+</AnchorPane>

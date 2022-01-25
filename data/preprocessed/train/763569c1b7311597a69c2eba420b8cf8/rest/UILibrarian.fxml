@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.UILibrarianController">
+    <children>
+        <Label fx:id="LabelPentruText" alignment="CENTER" layoutX="110.0" layoutY="100.0" prefHeight="99.0" prefWidth="378.0" text="UI Librarian" textAlignment="CENTER" />
+        <Label alignment="CENTER" textAlignment="CENTER" prefHeight="60.0" prefWidth="650.0" styleClass="librarian-label" text="Esti in cont de bibliotecar!" textOverrun="CLIP" />
+
+        <Button text="Creare cont de utilizator" onAction="#CreateUserAccount" layoutX="50.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Vizualizare sectiuni si rafturi" onAction="#SeeShelvesSections"  layoutX="350.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Imprumut carte"  onAction="#BorrowBook" layoutX="50.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Returnare Carte" onAction="#ReturnBook"  layoutX="350.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Vizualizare informatii despre carti" onAction="#SeeInfoBooks"  layoutX="50.0" layoutY="200.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Cautare carte" onAction="#SearchBook"  layoutX="350.0" layoutY="200.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Casare carte" onAction="#DestroyBook"  layoutX="50.0" layoutY="250.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Adaugare carte" onAction="#AddBook"  layoutX="350.0" layoutY="250.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Afisare detalii cont" onAction="#SeeAccountDetails"  layoutX="350.0" layoutY="300.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Afisare carti in imprumut" onAction="#SeeBorrowedBooks" layoutX="50.0" layoutY="300.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Top cele mai accesate carti electronice" onAction="#TopElectronicBooks" layoutX="350.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Top cele mai imprumutate carti" onAction="#TopBorrowedBooks" layoutX="50.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+        <Button text="Logout" onAction="#handlLogoutButtonAction" layoutX="200.0"  layoutY="400.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="login-button" textAlignment="CENTER"/>
+
+    </children>
+</AnchorPane>
