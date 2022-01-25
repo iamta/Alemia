@@ -11,16 +11,18 @@ import "./stylesheets/App.css"
 
 const API_BASE_ADDRESS = "http://127.0.0.1:3001"
 
-class App extends React.Component{
+class App extends React.Component {
 
     default_state = {
         current_step: 1,
         selected_filename: "Archive",
         predicted_grade: "NaN",
-        adjusted_grade: ""
+        adjusted_grade: "",
+        student_name: "",
+        project_stats: {}
     }
 
-    constructor(props){
+    constructor(props) {
 
         super(props)
 
@@ -30,13 +32,15 @@ class App extends React.Component{
         /* Bind methods */
         this.selectArchive = this.selectArchive.bind(this)
         this.adjustGrade = this.adjustGrade.bind(this)
+        this.adjust_name = this.adjust_name.bind(this)
         this.sendChangeRequest = this.sendChangeRequest.bind(this)
         this.retrainModel = this.retrainModel.bind(this)
         this.restartGradingProcess = this.restartGradingProcess.bind(this)
+        this.sendstatRequest = this.sendstatRequest.bind(this)
 
     }
 
-    selectArchive(event){
+    selectArchive(event) {
 
         var form_data = new FormData();
 
@@ -57,13 +61,19 @@ class App extends React.Component{
 
     }
 
-    adjustGrade(event){
+    adjustGrade(event) {
         this.setState({
             adjusted_grade: event.target.value
         })
     }
 
-    sendChangeRequest(){
+    adjust_name(event) {
+        this.setState({
+            student_name: event.target.value
+        })
+    }
+
+    sendChangeRequest() {
         axios.get(API_BASE_ADDRESS + "/adjust_grade", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -74,7 +84,20 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    retrainModel(){
+    sendstatRequest() {
+        axios.get(API_BASE_ADDRESS + "/stud_statistics/" + this.state.student_name, {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+        }).then(response => {
+            console.log(response);
+            this.setState({
+                project_stats: response.data
+            })
+        }).catch(error => console.log(error));
+    }
+
+    retrainModel() {
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -82,26 +105,31 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    restartGradingProcess(){
+    restartGradingProcess() {
         this.setState(this.default_state)
     }
 
-    render(){
+    render() {
 
         var first_step_classes = ["process-step"]
         var second_step_classes = ["process-step"]
+        var third_step_classes = ["process-step"]
 
         // Get classes for each jumbotron
-        if (this.state.current_step === 1){
+        if (this.state.current_step === 1) {
             first_step_classes.push("current")
             second_step_classes.push("inactive")
+            third_step_classes.push("current")
         }
-        else{
+        else {
             first_step_classes.push("done")
             second_step_classes.push("current")
+            third_step_classes.push("done")
+
         }
         first_step_classes = first_step_classes.join(" ")
         second_step_classes = second_step_classes.join(" ")
+        third_step_classes = third_step_classes.join(" ")
 
         return (
             <div className="App">
@@ -154,7 +182,7 @@ class App extends React.Component{
                         </Form>
 
                         <p>Go to the next student or retrain the machine learning model. When the training process ends, the new model will automatically replace the current one.</p>
-                        
+
                         <Button
                             variant="secondary"
                             size="sm"
@@ -172,6 +200,45 @@ class App extends React.Component{
                             Restart the grading process
                         </Button>
 
+                    </Jumbotron>
+
+                    <Jumbotron className={third_step_classes}>
+                        <h3>Get student project stats</h3>
+                        <Form>
+                            <InputGroup className="mb-3">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Insert student name"
+                                    value={this.state.student_name}
+                                    onChange={this.adjust_name}
+                                />
+                                <InputGroup.Append>
+                                    <Button
+                                        variant="outline-secondary"
+                                        onClick={this.sendstatRequest}
+                                    >
+                                        Get project stats
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Form>
+                        <table>
+                            <tr>
+
+                                {
+                                    Object.keys(this.state.project_stats).map(key => {
+                                        return <th>{key}</th>;
+                                    })
+                                }
+                            </tr>
+                            <tr>
+                                {
+                                    Object.values(this.state.project_stats).map(val => {
+                                        return <td>{val}</td>;
+                                    })
+                                }
+                            </tr>
+                        </table>
                     </Jumbotron>
 
                 </Container>

@@ -16,7 +16,7 @@ from train import Train, Predictor
 DOWNLOAD_DIRECTORY = "uploads"
 EXTRACTION_DIRECTORY = "../data/raw/train"
 GRADES_CSV_FILENAME = "../data/grades.csv"
-INIT_DATASET = False
+INIT_DATASET = True
 TRAIN_MODEL = True
 
 last_student_scanned = None
@@ -108,6 +108,21 @@ def model_retraining_route():
     return jsonify(result)
 
 
+@app.route("/stud_statistics/<stud_name>", methods=["GET"])
+def get_stud_stats(stud_name):
+
+    with open("../data/features.csv","rt") as file:
+        data = file.read().split('\n')
+        columns = data[0].split(',')[:-1]
+        
+        for student in data:
+            if stud_name in student.split(','):
+                result = {}
+                for column, value in zip(columns, student.split(',')):
+                    result[column]=value
+                return jsonify(result)    
+
+
 # Function for retraining the machine learning model
 def retrain_model():
     global predictor, preprocessor
@@ -117,6 +132,8 @@ def retrain_model():
     preprocessor = Preprocessor()
 
     print("[+] Successfully retrained the model")
+
+
 
 
 def main():
