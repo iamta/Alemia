@@ -11,7 +11,7 @@ import time
 import warnings
 import feature_extraction
 from preprocessor import Preprocessor
-from train import Train, Predictor
+from train import Train, Predictor, get_predictors
 
 DOWNLOAD_DIRECTORY = "uploads"
 EXTRACTION_DIRECTORY = "../data/raw/train"
@@ -60,18 +60,21 @@ def predict_route():
     features = feature_extraction.retrain_data_one(extraction_full_path + "/")
     features = preprocessor.transform_entry(features)
 
-    # Predict the grade
-    grade = predictor.predict([features])[0]
-    grade = round(grade, 2)
+    # Predict the grades
+    grades = {}
+    predictors = get_predictors()
+    for predictor in predictors:
+        grades[predictor.model_name] = round(predictor.predict([features])[0], 2)
 
-    # Dump the grade into the specific CSV file
+
+    # Dump the grades into the specific CSV file
     grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
     grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
     grades_df = grades_df[["label", "grade"]]
     grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
 
     # Return a result
-    result = {"predicted_grade": grade}
+    result = {"predicted_grades": grades}
     return jsonify(result)
 
 

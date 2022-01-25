@@ -7,6 +7,7 @@ import {
     Button
 } from "react-bootstrap"
 import axios from "axios"
+import GradeCard from "./Components/GradeCard";
 import "./stylesheets/App.css"
 
 const API_BASE_ADDRESS = "/api"
@@ -16,12 +17,16 @@ class App extends React.Component{
     default_state = {
         current_step: 1,
         selected_filename: "Archive",
-        predicted_grade: "NaN",
+        predicted_grades: {
+            "Model_1" : 3,
+            "Model_2" : 5.2,
+            "Model_3" : 7.5,
+            "Model_4" : 9.3,
+        },
         adjusted_grade: ""
     }
 
     constructor(props){
-
         super(props)
 
         /* Initialize the state */
@@ -51,7 +56,7 @@ class App extends React.Component{
             this.setState({
                 current_step: 2,
                 selected_filename: event.target.files[0].name,
-                predicted_grade: response.data.predicted_grade
+                predicted_grades: response.data.predicted_grades
             })
         }).catch(error => console.log(error));
 
@@ -133,7 +138,15 @@ class App extends React.Component{
                         <h3>Second Step</h3>
                         <p>Review the predicted grade. If you consider it is not right, create a change request to improve the machine learning models trained in the future.</p>
 
-                        <p className="grade">The predicted grade is <b>{this.state.predicted_grade}</b>.</p>
+                        <p className="grade">The predicted grades are:</p>
+                        <div className="grade-cards">
+                            {
+                                Object.entries(this.state.predicted_grades).map(entry => {
+                                    console.log(entry);
+                                    return <GradeCard grade={entry[1]} model={entry[0]} />
+                                })
+                            }
+                        </div>
                         <Form>
                             <InputGroup className="mb-3">
                                 <Form.Control

@@ -43,3 +43,9 @@
 .App .process-step.inactive{
     border-color: #353b48;
 }
+
+.App .grade-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
