@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from Crypto.Hash import MD5
@@ -11,7 +10,8 @@ import time
 import warnings
 import feature_extraction
 from preprocessor import Preprocessor
-from train import Train, Predictor
+from train import Train, Predictor, PredictorTorch
+import pytorch
 
 DOWNLOAD_DIRECTORY = "uploads"
 EXTRACTION_DIRECTORY = "../data/raw/train"
@@ -173,9 +173,18 @@ def model_retraining_route():
 def retrain_model(model):
     global predictor, preprocessor
 
-    Train(check=True).train()
-    predictor = Predictor(model)
-    preprocessor = Preprocessor()
+    # Train(check=True).train()
+    if (model == 1):
+        Train(check=True).train()
+    else:
+        pytorch.our_train()
+
+    if (model == 1):
+        predictor = Predictor()
+    else:
+        predictor = PredictorTorch()
+    
+    preprocessor = Preprocessor() 
 
     print("[+] Successfully retrained the model")
 
@@ -192,7 +201,7 @@ def main():
         Train(check=True).train()
 
     # Initialize some parts of the pipeline
-    predictor = Predictor(1)
+    predictor = Predictor()
     preprocessor = Preprocessor()
 
     # Run the web server
