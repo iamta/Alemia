@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 
 from flask import Flask, request, jsonify
@@ -56,23 +57,31 @@ def predict_route():
     with zipfile.ZipFile(full_path, "r") as zip_file:
         zip_file.extractall(extraction_full_path)
 
-    # Get features
-    features = feature_extraction.retrain_data_one(extraction_full_path + "/")
-    features = preprocessor.transform_entry(features)
+    list_mark = []
+    list_nameFolder = []
 
-    # Predict the grade
-    grade = predictor.predict([features])[0]
-    grade = round(grade, 2)
+    for fname in os.listdir(extraction_full_path + "/"):
+        print(fname)
+        file_full_path = extraction_full_path + "/" + fname
+        features = feature_extraction.retrain_data_one(file_full_path + "/")
+        features = preprocessor.transform_entry(features)
 
-    # Dump the grade into the specific CSV file
-    grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
-    grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
-    grades_df = grades_df[["label", "grade"]]
-    grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
+        # Predict the grade
+        grade = predictor.predict([features])[0]
+        grade = round(grade, 2)
 
+        # Dump the grade into the specific CSV file
+        grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
+        grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
+        grades_df = grades_df[["label", "grade"]]
+        grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
+
+        list_mark.append(grade)
+        list_nameFolder.append(fname)
+            
     # Return a result
-    result = {"predicted_grade": grade}
-    return jsonify(result)
+    result = {"name_folder": list_nameFolder, "predicted_grade": list_mark}
+    return jsonify(result)   
 
 
 # Grade adjusting route

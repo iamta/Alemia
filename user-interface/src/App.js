@@ -3,7 +3,10 @@ import {
     Container,
     Jumbotron,
     Form,
+    Tabs,
+    Tab,
     InputGroup,
+    Spinner,
     Button
 } from "react-bootstrap"
 import axios from "axios"
@@ -11,16 +14,18 @@ import "./stylesheets/App.css"
 
 const API_BASE_ADDRESS = "http://127.0.0.1:3001"
 
-class App extends React.Component{
+class App extends React.Component {
 
     default_state = {
         current_step: 1,
         selected_filename: "Archive",
-        predicted_grade: "NaN",
-        adjusted_grade: ""
+        predicted_grade: [],
+        adjusted_grade: "",
+        name_folder: [],
+        displaySpinner: false
     }
 
-    constructor(props){
+    constructor(props) {
 
         super(props)
 
@@ -36,11 +41,13 @@ class App extends React.Component{
 
     }
 
-    selectArchive(event){
+    selectArchive(event) {
 
         var form_data = new FormData();
 
         form_data.append("file", event.target.files[0])
+
+        this.setState({ displaySpinner: true });
 
         axios.post(API_BASE_ADDRESS + "/predict", form_data, {
             headers: {
@@ -50,20 +57,21 @@ class App extends React.Component{
         }).then(response => {
             this.setState({
                 current_step: 2,
-                selected_filename: event.target.files[0].name,
-                predicted_grade: response.data.predicted_grade
+                predicted_grade: response.data.predicted_grade,
+                name_folder: response.data.name_folder,
+                displaySpinner: false
             })
         }).catch(error => console.log(error));
 
     }
 
-    adjustGrade(event){
+    adjustGrade(event) {
         this.setState({
             adjusted_grade: event.target.value
         })
     }
 
-    sendChangeRequest(){
+    sendChangeRequest() {
         axios.get(API_BASE_ADDRESS + "/adjust_grade", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -74,7 +82,7 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    retrainModel(){
+    retrainModel() {
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
                 "Access-Control-Allow-Origin": "*"
@@ -82,27 +90,26 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
-    restartGradingProcess(){
+    restartGradingProcess() {
         this.setState(this.default_state)
     }
 
-    render(){
+    render() {
 
         var first_step_classes = ["process-step"]
         var second_step_classes = ["process-step"]
-
+        var intermediare = ["process-step"]
         // Get classes for each jumbotron
-        if (this.state.current_step === 1){
+        if (this.state.current_step === 1) {
             first_step_classes.push("current")
-            second_step_classes.push("inactive")
+            second_step_classes.push("d-none")
         }
-        else{
+        else {
             first_step_classes.push("done")
             second_step_classes.push("current")
         }
         first_step_classes = first_step_classes.join(" ")
         second_step_classes = second_step_classes.join(" ")
-
         return (
             <div className="App">
 
@@ -125,36 +132,50 @@ class App extends React.Component{
                                 onChange={this.selectArchive}
                             />
                         </Form>
-                    </Jumbotron>
 
-                    {/* Place to bind the predicted grade, change it or retrain the model */}
+                    </Jumbotron>
+                    <Spinner className={this.state.displaySpinner ? "" : "d-none"} animation="border"></Spinner>
+                    {
+                    /* Place to bind the predicted grade, change it or retrain the model */}
                     <Jumbotron className={second_step_classes}>
 
-                        <h3>Second Step</h3>
-                        <p>Review the predicted grade. If you consider it is not right, create a change request to improve the machine learning models trained in the future.</p>
+                        <Tabs className="m-3">
+                            {
+                                this.state.name_folder.map((folder, index) => {
+                                    let predictedGrade = this.state.predicted_grade[index];
+                                    return <Tab eventKey={folder} title={folder} defaultActiveKey={folder} >
+                                        <h3>Second Step</h3>
+                                        <p>Review the predicted grade. If you consider it is not right, create a change request to improve the machine learning models trained in the future.</p>
 
-                        <p className="grade">The predicted grade is <b>{this.state.predicted_grade}</b>.</p>
-                        <Form>
-                            <InputGroup className="mb-3">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Manually adjusted grade"
-                                    value={this.state.adjusted_grade}
-                                    onChange={this.adjustGrade}
-                                />
-                                <InputGroup.Append>
-                                    <Button
-                                        variant="outline-secondary"
-                                        onClick={this.sendChangeRequest}
-                                    >
-                                        Send a change request
-                                    </Button>
-                                </InputGroup.Append>
-                            </InputGroup>
-                        </Form>
+                                        <p className="grade">The predicted grade is <b>{predictedGrade}</b>.</p>
+                                        <Form>
+                                            <InputGroup className="mb-3">
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Manually adjusted grade"
+                                                    value={predictedGrade}
+                                                    onChange={this.adjustGrade}
+                                                />
+                                                <InputGroup.Append>
+                                                    <Button
+                                                        variant="outline-secondary"
+                                                        onClick={this.sendChangeRequest}
+                                                    >
+                                                        Send a change request
+                                                    </Button>
+                                                </InputGroup.Append>
+                                            </InputGroup>
+                                        </Form>
 
-                        <p>Go to the next student or retrain the machine learning model. When the training process ends, the new model will automatically replace the current one.</p>
-                        
+                                        <p>Go to the next student or retrain the machine learning model. When the training process ends, the new model will automatically replace the current one.</p>
+
+                                    </Tab>
+                                })
+                            }
+
+
+                        </Tabs>
+
                         <Button
                             variant="secondary"
                             size="sm"
@@ -173,6 +194,7 @@ class App extends React.Component{
                         </Button>
 
                     </Jumbotron>
+
 
                 </Container>
 
