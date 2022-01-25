@@ -11,7 +11,7 @@ import time
 import warnings
 import feature_extraction
 from preprocessor import Preprocessor
-from train import Train, Predictor
+from train.pyTorchTrain import Train, Predictor
 
 DOWNLOAD_DIRECTORY = "uploads"
 EXTRACTION_DIRECTORY = "../data/raw/train"
@@ -27,6 +27,9 @@ predictor = None
 app = Flask(__name__)
 CORS(app)
 
+
+#define used instances for train and predictor
+#too: implement here injections
 
 # Default route
 @app.route("/")
@@ -62,6 +65,7 @@ def predict_route():
 
     # Predict the grade
     grade = predictor.predict([features])[0]
+    print(grade)
     grade = round(grade, 2)
 
     # Dump the grade into the specific CSV file
