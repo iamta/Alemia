@@ -29,13 +29,13 @@ CORS(app)
 
 
 # Default route
-@app.route("/")
+@app.route("/api/")
 def default_route():
     return "Alemia API\n"
 
 
 # Prediction route
-@app.route("/predict", methods=["POST"])
+@app.route("/api/predict", methods=["POST"])
 def predict_route():
 
     global last_student_scanned, preprocessor, predictor
@@ -76,7 +76,7 @@ def predict_route():
 
 
 # Grade adjusting route
-@app.route("/adjust_grade", methods=["GET"])
+@app.route("/api/adjust_grade", methods=["GET"])
 def grade_adjustment_route():
 
     global last_student_scanned
@@ -97,7 +97,7 @@ def grade_adjustment_route():
 
 
 # Model retraining route
-@app.route("/retrain_model", methods=["GET"])
+@app.route("/api/retrain_model", methods=["GET"])
 def model_retraining_route():
 
     # Create a thread that retrain the model
@@ -119,28 +119,30 @@ def retrain_model():
     print("[+] Successfully retrained the model")
 
 
-def main():
-    global preprocessor, predictor
+warnings.simplefilter(action="ignore", category=RuntimeWarning)
+
+#def main():
+    #global preprocessor, predictor
 
     # Initialize the dataset
-    if (INIT_DATASET):
-        feature_extraction.init_setup()
+if (INIT_DATASET):
+    feature_extraction.init_setup()
 
-    # Train the model
-    if (TRAIN_MODEL):
-        Train(check=True).train()
+# Train the model
+if (TRAIN_MODEL):
+    Train(check=True).train()
 
-    # Initialize some parts of the pipeline
-    predictor = Predictor()
-    preprocessor = Preprocessor()
+# Initialize some parts of the pipeline
+predictor = Predictor()
+preprocessor = Preprocessor()
 
     # Run the web server
-    app.run(host="0.0.0.0", port=3001, debug=True)
+    #app.run(host="0.0.0.0", port=3001, debug=True)
 
 
-if __name__ == "__main__":
+#f __name__ == "__main__":
 
     # Disable warnings
-    warnings.simplefilter(action="ignore", category=RuntimeWarning)
+    #warnings.simplefilter(action="ignore", category=RuntimeWarning)
 
-    main()
+    #main()
