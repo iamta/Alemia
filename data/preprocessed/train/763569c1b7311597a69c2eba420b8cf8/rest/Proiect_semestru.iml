@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_17">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="mssql-jdbc-9.4.0.jre16" level="project" />
+    <orderEntry type="library" name="pdfbox-app-1.8.13 (2)" level="project" />
+    <orderEntry type="library" name="json-simple-1.1.1" level="project" />
+    <orderEntry type="library" name="pdfbox-app-1.8.13" level="project" />
+    <orderEntry type="library" name="mssql-jdbc-9.4.0.jre16" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.pdfbox:pdfbox-app:1.8.13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:win:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:17-ea+11" level="project" />
+    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:11.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.dlsc.formsfx:formsfx-core:11.3.2" level="project" />
+    <orderEntry type="library" name="Maven: net.synedra:validatorfx:0.1.13" level="project" />
+    <orderEntry type="library" name="Maven: org.kordamp.ikonli:ikonli-javafx:12.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.kordamp.ikonli:ikonli-core:12.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" level="project" />
+    <orderEntry type="library" name="Maven: eu.hansolo:tilesfx:11.48" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.7.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:25.1-android" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-compat-qual:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssql-jdbc:9.5.0.jre17-preview" level="project" />
+    <orderEntry type="library" name="Maven: io.github.ccincharge:newsapi:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-common:2.26" level="project" />
+    <orderEntry type="library" name="Maven: javax.ws.rs:javax.ws.rs-api:2.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:javax.inject:2.5.0-b42" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:osgi-resource-locator:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-client:2.26" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.inject:jersey-hk2:2.26" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-locator:2.5.0-b42" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b42" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-api:2.5.0-b42" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-utils:2.5.0-b42" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.22.0-CR2" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20210307" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.lbovolini:ObjectMapper:0.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.npm:object.map:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.npm:for-own:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.npm:for-in:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.npm:make-iterator:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.npm:kind-of:6.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.github.lbovolini:object-mapper:1.1.68" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml:jackson-xml-databind:0.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.9.2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.woodstox:stax2-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+  </component>
+</module>

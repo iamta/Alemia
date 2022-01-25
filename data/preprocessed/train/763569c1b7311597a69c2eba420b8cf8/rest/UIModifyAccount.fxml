@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="303.0" prefWidth="433.0" stylesheets="@../../../../style.css"
+            xmlns="http://javafx.com/javafx/17"
+            fx:controller="ro.mta.library_project.Controllers.AdminControllers.UIModifyAccountController">
+    <children>
+        <Label fx:id="afisEroare" layoutX="125.0" layoutY="6.0" prefHeight="52.0" prefWidth="521.0"
+               styleClass="login-label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="62.0" prefHeight="38.0" prefWidth="132.0" styleClass="static_text-label"
+               text="  Username actual:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="246.0" prefHeight="38.0" prefWidth="132.0" styleClass="static_text-label"
+               text="  Rol nou:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="129.0" prefHeight="38.0" prefWidth="132.0" styleClass="static_text-label"
+               text="  Username nou:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="187.0" prefHeight="38.0" prefWidth="132.0" styleClass="static_text-label"
+               text="  Parola noua:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="textFieldUsernameDeModificat" layoutX="146.0" layoutY="62.0" prefHeight="38.0"
+                   prefWidth="182.0" promptText="Current Username"/>
+        <TextField fx:id="textFieldNewRol" layoutX="146.0" layoutY="246.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="New Rol"/>
+        <TextField fx:id="textFieldNewUsername" layoutX="146.0" layoutY="129.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="New Username"/>
+        <TextField fx:id="textFieldNewPassword" layoutX="146.0" layoutY="187.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="New Password"/>
+        <Button layoutX="347.0" layoutY="242.0" mnemonicParsing="false" onAction="#handleModifyAccountButton"
+                prefHeight="46.0" prefWidth="74.0" styleClass="login-button" text="Modify">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Line endX="332.0" endY="7.62939453125E-6" layoutX="101.0" layoutY="113.0" startX="-100.0" stroke="#9c9c9c"/>
+    </children>
+</AnchorPane>

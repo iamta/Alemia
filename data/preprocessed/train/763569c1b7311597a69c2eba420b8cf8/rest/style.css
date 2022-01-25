@@ -1,0 +1,83 @@
+* {
+    -fx-primary: #2A2E37;
+    -fx-secondary: #FFFF8D;
+    -fx-primarytext: #B2B2B2;
+    -fx-tertiary: #21242b;
+}
+
+.container{
+ -fx-background-color: -fx-primary;
+}
+
+.root {
+    -fx-background-color: -fx-primary;
+}
+
+.button {
+    -fx-text-fill: -fx-primarytext;
+}
+
+.static_text-label {
+    -fx-background-color: #373c48;
+    -fx-text-fill: white;
+}
+
+/* Login */
+
+.login-label {
+    -fx-background-color: -fx-tertiary;
+    -fx-text-fill: white;
+}
+
+.user-label {
+     -fx-text-fill: white;
+}
+
+.details-label {
+     -fx-text-fill: white;
+     -fx-font-size: 24;
+     -fx-alignment:center;
+}
+
+.menu {
+     -fx-font-size: 14;
+}
+
+.user_grid
+{
+}
+
+.news-label {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-size: 24;
+    -fx-alignment:center;
+}
+
+.login-button {
+    -fx-border-color: -fx-secondary;
+    -fx-border-radius: 20px;
+    -fx-border-width: 3px;
+    -fx-background-radius: 20px;
+    -fx-background-color: -fx-primary;
+}
+
+.login-button:hover {
+    -fx-border-color: -fx-secondary;
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+.text-field {
+    -fx-text-fill: black;
+    -fx-font-size: 13pt;
+    -fx-focus-color: -fx-secondary;
+}
+
+/* */
+.librarian-label{
+   -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-size: 25;
+}
+

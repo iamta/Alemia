@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.LibrarianControllers.ReturnBookController">
+
+    <Label alignment="CENTER" prefHeight="60.0" prefWidth="650.0" styleClass="librarian-label" text="Returneaza o carte!" textAlignment="CENTER" textOverrun="CLIP" />
+    <Label layoutX="103.0" layoutY="131.0" text="Introdu codul de imprumut:" textFill="#f0ecec">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Label>
+    <TextField fx:id="code" layoutX="317.0" layoutY="122.0" />
+    <ListView fx:id="list" layoutX="103.0" layoutY="270.0" prefHeight="150.0" prefWidth="427.0" />
+    <Button layoutX="200.0" layoutY="210.0" mnemonicParsing="false" onAction="#returnBook" styleClass="login-button" text="Realizeaza retur si afiseaza noua locatie" />
+</AnchorPane>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="229.0" prefWidth="379.0" stylesheets="@../../../style.css"
+            xmlns="http://javafx.com/javafx/17" fx:controller="ro.mta.library_project.Controllers.UILoginController">
+    <children>
+        <Label fx:id="titleLabel" alignment="CENTER" layoutX="3.0" layoutY="14.0" prefHeight="38.0" prefWidth="379.0"
+               styleClass="login-label" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="username" layoutX="35.0" layoutY="53.0" prefHeight="38.0" prefWidth="314.0"
+                   promptText="Username">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </TextField>
+        <PasswordField id="password" fx:id="password" layoutX="35.0" layoutY="110.0" prefHeight="38.0" prefWidth="314.0"
+                       promptText="Password">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </PasswordField>
+        <Button layoutX="258.0" layoutY="168.0" mnemonicParsing="false" onAction="#handleExitButtonAction"
+                prefHeight="48.0" prefWidth="90.0" styleClass="login-button" text="Exit">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="loginButton" layoutX="35.0" layoutY="168.0" mnemonicParsing="false"
+                onAction="#handleLoginButtonAction" prefHeight="48.0" prefWidth="90.0" styleClass="login-button"
+                text="Login">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="guestButton" layoutX="147.0" layoutY="168.0" mnemonicParsing="false"
+                onAction="#handleGuestButtonAction" prefHeight="48.0" prefWidth="90.0" styleClass="login-button"
+                text="Guest">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

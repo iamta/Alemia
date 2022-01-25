@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="446.0" prefWidth="738.0" stylesheets="@../../../../style.css"
+            xmlns="http://javafx.com/javafx/17"
+            fx:controller="ro.mta.library_project.Controllers.AdminControllers.UICreateAccountController">
+    <children>
+        <Label fx:id="afisEroare" layoutX="125.0" layoutY="6.0" prefHeight="52.0" prefWidth="688.0"
+               styleClass="login-label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="62.0" prefHeight="38.0" prefWidth="114.0" styleClass="static_text-label"
+               text="  Nume:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="129.0" prefHeight="38.0" prefWidth="114.0" styleClass="static_text-label"
+               text="  Prenume:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="197.0" prefHeight="38.0" prefWidth="114.0" styleClass="static_text-label"
+               text="  Data nasterii:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="269.0" prefHeight="38.0" prefWidth="114.0" styleClass="static_text-label"
+               text="  CNP:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="331.0" layoutY="62.0" prefHeight="38.0" prefWidth="114.0" styleClass="static_text-label"
+               text="  Username:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="329.0" layoutY="129.0" prefHeight="38.0" prefWidth="114.0" styleClass="static_text-label"
+               text="  Parola:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="329.0" layoutY="197.0" prefHeight="38.0" prefWidth="113.0" styleClass="static_text-label"
+               text="  Repeta parola:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="329.0" layoutY="269.0" prefHeight="38.0" prefWidth="114.0" styleClass="static_text-label"
+               text="  Rol:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="textFieldNume" layoutX="128.0" layoutY="62.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="Nume"/>
+        <TextField fx:id="textFieldPrenume" layoutX="128.0" layoutY="129.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="Prenume"/>
+        <TextField fx:id="textFieldDataNasterii" layoutX="128.0" layoutY="197.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="YYYY.MM.DD"/>
+        <TextField fx:id="textFieldCNP" layoutX="128.0" layoutY="269.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="CNP"/>
+        <TextField fx:id="textFieldUsername" layoutX="443.0" layoutY="62.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="Username"/>
+        <PasswordField fx:id="textFieldParola" layoutX="443.0" layoutY="129.0" prefHeight="38.0" prefWidth="182.0"
+                       promptText="Password"/>
+        <PasswordField fx:id="textFieldParola2" layoutX="443.0" layoutY="197.0" prefHeight="38.0" prefWidth="182.0"
+                       promptText="Repeat Password"/>
+        <TextField fx:id="textFieldRol" layoutX="443.0" layoutY="269.0" prefHeight="38.0" prefWidth="182.0"
+                   promptText="Rol"/>
+        <Button layoutX="649.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleCreateAccountButton"
+                prefHeight="46.0" prefWidth="74.0" styleClass="login-button" text="Create">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+        <Line endX="547.9999389648438" layoutX="189.0" layoutY="330.0" startX="-188.99998474121094" stroke="#767676"/>
+        <Label layoutX="14.0" layoutY="341.0" prefHeight="38.0" prefWidth="154.0" styleClass="static_text-label"
+               text="  Username:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="394.0" prefHeight="38.0" prefWidth="154.0" styleClass="static_text-label"
+               text="  Repeta username-ul:">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="textFieldUsername2" layoutX="168.0" layoutY="341.0" promptText="Username"/>
+        <TextField fx:id="textFieldUsername3" layoutX="168.0" layoutY="393.0" promptText="Repeat Username"/>
+        <Button layoutX="649.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleDeleteAccountButton"
+                prefHeight="46.0" prefWidth="74.0" styleClass="login-button" text="Delete">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

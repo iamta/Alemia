@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="806.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.LibrarianControllers.TopElectronicBooksController">
+    <children>
+        <Label alignment="CENTER" prefHeight="60.0" prefWidth="800.0" styleClass="librarian-label" text="Vezi topul celor mai accesate carti electronice!" textAlignment="CENTER" textOverrun="CLIP" />
+        <TableView fx:id="myTableViewSeeBooks" layoutX="10.0" layoutY="63.0" prefHeight="334.0" prefWidth="890.0" styleClass="container" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="63.0">
+            <columns>
+                <TableColumn fx:id="title" prefWidth="276.1999969482422" text="Titlu" />
+                <TableColumn fx:id="authorFirstname" minWidth="0.0" prefWidth="205.4000244140625" text="Prenume autor" />
+                <TableColumn fx:id="authorLastname" minWidth="0.0" prefWidth="137.20001220703125" text="Nume autor" />
+                <TableColumn fx:id="borrowing" prefWidth="173.0" text="Numar Imprumuturi" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

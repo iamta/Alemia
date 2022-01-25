@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="623.0" prefWidth="1023.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.NewsController">
+    <children>
+        <TextField fx:id="getNews" layoutX="34.0" layoutY="86.0" prefHeight="37.0" prefWidth="273.0" />
+        <Button fx:id="newsButton" layoutX="319.0" layoutY="89.0" mnemonicParsing="false" onAction="#printArticles" styleClass="login-button" text="OK" />
+        <Label layoutY="-2.0" prefHeight="53.0" prefWidth="1035.0" styleClass="news-label" text="Sectiunea de stiri" />
+      <ListView fx:id="listOfNews" layoutX="34.0" layoutY="148.0" prefHeight="465.0" prefWidth="978.0" />
+    </children>
+</AnchorPane>

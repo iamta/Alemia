@@ -10,6 +10,7 @@ import math
 import os
 import joblib
 
+
 WEIGHTS_FILE = "../data/weights.apt"
 
 # Training class

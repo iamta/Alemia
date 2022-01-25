@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.mta.library_project.Controllers.ViewElectronicBookController">
+   <children>
+      <Label layoutY="-15.0" prefHeight="66.0" prefWidth="600.0" styleClass="news-label" text="Vizualizare carte electronica" />
+      <TextArea fx:id="textArea" layoutX="11.0" layoutY="62.0" prefHeight="317.0" prefWidth="566.0" />
+   </children>
+</AnchorPane>
