@@ -6,11 +6,15 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression, SGDRegressor, Ridge
 from sklearn.metrics import mean_squared_error
 from sklearn.svm import SVR
+import torch
 import math
 import os
 import joblib
 
+import pytorch
+
 WEIGHTS_FILE = "../data/weights.apt"
+OUR_MODEL_FILE = "../data/model.pt"
 
 # Training class
 # Allows for two methods - RandomForest and LinearRegression
@@ -150,18 +154,54 @@ class Train:
 
         return array
 
-
 class Predictor:
     def __init__(self, model_name=WEIGHTS_FILE):
 
         self.model = joblib.load(model_name)
+        print(self.model)
 
     # returns <class 'numpy.ndarray'>
     def predict(self, features):
 
         prediction = self.model.predict(features)
+        print(prediction)
 
         return prediction
+
+class PredictorTorch:
+    def __init__(self, model_name=OUR_MODEL_FILE):
+
+        self.model = pytorch.RegressionModel(pytorch.getInputNumber(),1)
+        self.model.load_state_dict(torch.load(model_name))
+        self.model.eval()
+        print(self.model)
+
+    # returns <class 'numpy.ndarray'>
+    def predict(self, features):
+        # Pregatim DataLoader-ul pentru validare
+        test_loader = torch.utils.data.DataLoader(pytorch.getTestSet(), batch_size=32, shuffle=False)
+
+        # Pregatim o modalitate de stocare a datelor pentru evaluare
+        eval_outputs = []
+        true_labels = []
+        x = []
+
+        # ########### Evaluation Loop #############
+        print(test_loader)
+        with torch.no_grad():
+            for batch in test_loader:
+                inputs, labels = batch['features'], batch['labels']
+                # calculate outputs by running images through the network
+                outputs = self.model(inputs)
+                eval_outputs += outputs.squeeze(dim=1).tolist()
+                true_labels += labels.squeeze(dim=1).tolist()
+                x += inputs.squeeze(dim=1).tolist()
+
+        sum = 0
+        for i in true_labels:
+            sum += i
+
+        return [sum/len(true_labels)]
 
 
 #How to run
