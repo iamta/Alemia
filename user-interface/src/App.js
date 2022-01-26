@@ -23,7 +23,9 @@ class App extends React.Component{
             "Model_3" : 7.5,
             "Model_4" : 9.3,
         },
-        adjusted_grade: ""
+        adjusted_grade: "",
+        student_name: "",
+        project_stats: {}
     }
 
     constructor(props){
@@ -38,6 +40,8 @@ class App extends React.Component{
         this.sendChangeRequest = this.sendChangeRequest.bind(this)
         this.retrainModel = this.retrainModel.bind(this)
         this.restartGradingProcess = this.restartGradingProcess.bind(this)
+        this.adjust_name = this.adjust_name.bind(this)
+        this.sendstatRequest = this.sendstatRequest.bind(this)
 
     }
 
@@ -79,6 +83,25 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
+    adjust_name(event) {
+        this.setState({
+            student_name: event.target.value
+        })
+    }
+
+    sendstatRequest() {
+        axios.get(API_BASE_ADDRESS + "/stud_statistics/" + this.state.student_name, {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+        }).then(response => {
+            console.log(response);
+            this.setState({
+                project_stats: response.data
+            })
+        }).catch(error => console.log(error));
+    }
+
     retrainModel(){
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
@@ -95,18 +118,23 @@ class App extends React.Component{
 
         var first_step_classes = ["process-step"]
         var second_step_classes = ["process-step"]
+        var third_step_classes = ["process-step"]
 
         // Get classes for each jumbotron
-        if (this.state.current_step === 1){
+        if (this.state.current_step === 1) {
             first_step_classes.push("current")
             second_step_classes.push("inactive")
+            third_step_classes.push("current")
         }
-        else{
+        else {
             first_step_classes.push("done")
             second_step_classes.push("current")
+            third_step_classes.push("done")
+
         }
         first_step_classes = first_step_classes.join(" ")
         second_step_classes = second_step_classes.join(" ")
+        third_step_classes = third_step_classes.join(" ")
 
         return (
             <div className="App">
@@ -142,7 +170,6 @@ class App extends React.Component{
                         <div className="grade-cards">
                             {
                                 Object.entries(this.state.predicted_grades).map(entry => {
-                                    console.log(entry);
                                     return <GradeCard grade={entry[1]} model={entry[0]} />
                                 })
                             }
@@ -185,6 +212,45 @@ class App extends React.Component{
                             Restart the grading process
                         </Button>
 
+                    </Jumbotron>
+
+                    <Jumbotron className={third_step_classes}>
+                        <h3>Get student project stats</h3>
+                        <Form>
+                            <InputGroup className="mb-3">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Insert student name"
+                                    value={this.state.student_name}
+                                    onChange={this.adjust_name}
+                                />
+                                <InputGroup.Append>
+                                    <Button
+                                        variant="outline-secondary"
+                                        onClick={this.sendstatRequest}
+                                    >
+                                        Get project stats
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Form>
+                        <table>
+                            <tr>
+
+                                {
+                                    Object.keys(this.state.project_stats).map(key => {
+                                        return <th>{key}</th>;
+                                    })
+                                }
+                            </tr>
+                            <tr>
+                                {
+                                    Object.values(this.state.project_stats).map(val => {
+                                        return <td>{val}</td>;
+                                    })
+                                }
+                            </tr>
+                        </table>
                     </Jumbotron>
 
                 </Container>

@@ -67,11 +67,13 @@ def predict_route():
         grades[predictor.model_name] = round(predictor.predict([features])[0], 2)
 
 
+    '''
     # Dump the grades into the specific CSV file
     grades_df = pandas.read_csv(GRADES_CSV_FILENAME)
     grades_df.loc[len(grades_df.index)] = [last_student_scanned, grade]
     grades_df = grades_df[["label", "grade"]]
     grades_df.to_csv(GRADES_CSV_FILENAME, index=False)
+    '''
 
     # Return a result
     result = {"predicted_grades": grades}
@@ -110,6 +112,19 @@ def model_retraining_route():
     result = {"status": "ok"}
     return jsonify(result)
 
+@app.route("/api/stud_statistics/<stud_name>", methods=["GET"])
+def get_stud_stats(stud_name):
+
+    with open("../data/features.csv","rt") as file:
+        data = file.read().split('\n')
+        columns = data[0].split(',')[:-1]
+        
+        for student in data:
+            if stud_name in student.split(','):
+                result = {}
+                for column, value in zip(columns, student.split(',')):
+                    result[column]=value
+                return jsonify(result)   
 
 # Function for retraining the machine learning model
 def retrain_model():

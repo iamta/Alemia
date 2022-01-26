@@ -11,7 +11,7 @@ import math
 import os
 import joblib
 
-WEIGHTS_FILE = "../data/weights.apt"
+WEIGHTS_FILE = "../data/model1.apt"
 WEIGHTS_PATH = "../data/"
 
 # Training class
@@ -155,7 +155,7 @@ class Train:
 
 class Predictor:
     def __init__(self, model_name=WEIGHTS_FILE):
-        self.model_name = os.path.basename(WEIGHTS_FILE).strip(".")[0]
+        self.model_name = os.path.splitext(os.path.basename(WEIGHTS_FILE))[0]
         self.model = joblib.load(model_name)
 
     # returns <class 'numpy.ndarray'>

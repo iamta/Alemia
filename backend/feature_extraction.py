@@ -64,7 +64,7 @@ def create_csv(trainDir, outfilename, students):
     output.write(
         "nr_global,nr_public,nr_private,nr_protected,nr_define,nr_template,")
     output.write("nr_stl,nr_namespace,nr_enum,nr_struct,nr_cpp,")
-    output.write("nr_comments,nr_function,headers_size,sources_size,\n")
+    output.write("nr_comments,nr_function,headers_size,sources_size,nr_override,nr_destructors,words_readme,\n")
 
     nrCrt = 0
     for std in students:
@@ -77,6 +77,10 @@ def create_csv(trainDir, outfilename, students):
         sources = [
             s for s in os.listdir(local_dir + "/sources/")
             if os.path.isfile(os.path.join(local_dir + "/sources/", s))
+        ]
+        readme_s = [
+            r for r in os.listdir(local_dir + "/text/")
+            if os.path.isfile(os.path.join(local_dir + "/text/", r))
         ]
 
         class_number = len(headers)
@@ -111,6 +115,9 @@ def create_csv(trainDir, outfilename, students):
         enum_pattern = re.compile(r"\W*(enum)\W*")
         struct_pattern = re.compile(r"W*(stuct)\W*")
         function_pattern = re.compile(r"\W*(\(\))\W*")
+        override_pattern = re.compile(r"\W*(override)\W*")
+        destructors_pattern = re.compile(r"\W*(~+[a-zA-Z0=9]*\(\))\W*")
+        readme_words_pattern = re.compile(r"\W*(([A-Za-z0-9\-]+))\W*")
 
         inheritance_count = 0
         virtual_count = 0
@@ -131,6 +138,12 @@ def create_csv(trainDir, outfilename, students):
 
         sources_size = 0
         headers_size = 0
+        
+        override_count=0
+        destructor_count = 0
+        readme_words_count = 0
+
+        
         for source in sources:
             sources_size += os.path.getsize(local_dir + "/sources/" + source)
 
@@ -163,10 +176,18 @@ def create_csv(trainDir, outfilename, students):
                                            enum_pattern)
             struct_count += get_regex_counts(local_dir + "/headers/" + header,
                                              struct_pattern)
-
             function_count += get_regex_counts(
                 local_dir + "/headers/" + header, function_pattern)
             headers_size += os.path.getsize(local_dir + "/headers/" + header)
+            override_count += get_regex_counts(local_dir + "/headers/" + header,
+                                          override_pattern)
+            destructor_count += get_regex_counts(local_dir + "/headers/" + header,
+                                          destructors_pattern)
+
+        for readme in readme_s:
+            readme_words_count += get_regex_counts(local_dir + "/text/" + readme,
+                                        readme_words_pattern)
+
 
         to_Write = []
         to_Write.append(nrCrt)
@@ -191,6 +212,9 @@ def create_csv(trainDir, outfilename, students):
         to_Write.append(function_count)
         to_Write.append(headers_size)
         to_Write.append(sources_size)
+        to_Write.append(override_count)
+        to_Write.append(destructor_count)
+        to_Write.append(readme_words_count)
 
         for w in to_Write:
             output.write(str(w) + ",")
