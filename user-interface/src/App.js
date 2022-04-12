@@ -7,21 +7,28 @@ import {
     Button
 } from "react-bootstrap"
 import axios from "axios"
+import GradeCard from "./Components/GradeCard";
 import "./stylesheets/App.css"
 
-const API_BASE_ADDRESS = "http://127.0.0.1:3001"
+const API_BASE_ADDRESS = "/api"
 
 class App extends React.Component{
 
     default_state = {
         current_step: 1,
         selected_filename: "Archive",
-        predicted_grade: "NaN",
-        adjusted_grade: ""
+        predicted_grades: {
+            "Model_1" : 3,
+            "Model_2" : 5.2,
+            "Model_3" : 7.5,
+            "Model_4" : 9.3,
+        },
+        adjusted_grade: "",
+        student_name: "",
+        project_stats: {}
     }
 
     constructor(props){
-
         super(props)
 
         /* Initialize the state */
@@ -33,6 +40,8 @@ class App extends React.Component{
         this.sendChangeRequest = this.sendChangeRequest.bind(this)
         this.retrainModel = this.retrainModel.bind(this)
         this.restartGradingProcess = this.restartGradingProcess.bind(this)
+        this.adjust_name = this.adjust_name.bind(this)
+        this.sendstatRequest = this.sendstatRequest.bind(this)
 
     }
 
@@ -51,7 +60,7 @@ class App extends React.Component{
             this.setState({
                 current_step: 2,
                 selected_filename: event.target.files[0].name,
-                predicted_grade: response.data.predicted_grade
+                predicted_grades: response.data.predicted_grades
             })
         }).catch(error => console.log(error));
 
@@ -74,6 +83,25 @@ class App extends React.Component{
         }).catch(error => console.log(error));
     }
 
+    adjust_name(event) {
+        this.setState({
+            student_name: event.target.value
+        })
+    }
+
+    sendstatRequest() {
+        axios.get(API_BASE_ADDRESS + "/stud_statistics/" + this.state.student_name, {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+        }).then(response => {
+            console.log(response);
+            this.setState({
+                project_stats: response.data
+            })
+        }).catch(error => console.log(error));
+    }
+
     retrainModel(){
         axios.get(API_BASE_ADDRESS + "/retrain_model", {
             headers: {
@@ -90,18 +118,23 @@ class App extends React.Component{
 
         var first_step_classes = ["process-step"]
         var second_step_classes = ["process-step"]
+        var third_step_classes = ["process-step"]
 
         // Get classes for each jumbotron
-        if (this.state.current_step === 1){
+        if (this.state.current_step === 1) {
             first_step_classes.push("current")
             second_step_classes.push("inactive")
+            third_step_classes.push("current")
         }
-        else{
+        else {
             first_step_classes.push("done")
             second_step_classes.push("current")
+            third_step_classes.push("done")
+
         }
         first_step_classes = first_step_classes.join(" ")
         second_step_classes = second_step_classes.join(" ")
+        third_step_classes = third_step_classes.join(" ")
 
         return (
             <div className="App">
@@ -133,7 +166,14 @@ class App extends React.Component{
                         <h3>Second Step</h3>
                         <p>Review the predicted grade. If you consider it is not right, create a change request to improve the machine learning models trained in the future.</p>
 
-                        <p className="grade">The predicted grade is <b>{this.state.predicted_grade}</b>.</p>
+                        <p className="grade">The predicted grades are:</p>
+                        <div className="grade-cards">
+                            {
+                                Object.entries(this.state.predicted_grades).map(entry => {
+                                    return <GradeCard grade={entry[1]} model={entry[0]} />
+                                })
+                            }
+                        </div>
                         <Form>
                             <InputGroup className="mb-3">
                                 <Form.Control
@@ -172,6 +212,45 @@ class App extends React.Component{
                             Restart the grading process
                         </Button>
 
+                    </Jumbotron>
+
+                    <Jumbotron className={third_step_classes}>
+                        <h3>Get student project stats</h3>
+                        <Form>
+                            <InputGroup className="mb-3">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Insert student name"
+                                    value={this.state.student_name}
+                                    onChange={this.adjust_name}
+                                />
+                                <InputGroup.Append>
+                                    <Button
+                                        variant="outline-secondary"
+                                        onClick={this.sendstatRequest}
+                                    >
+                                        Get project stats
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Form>
+                        <table>
+                            <tr>
+
+                                {
+                                    Object.keys(this.state.project_stats).map(key => {
+                                        return <th>{key}</th>;
+                                    })
+                                }
+                            </tr>
+                            <tr>
+                                {
+                                    Object.values(this.state.project_stats).map(val => {
+                                        return <td>{val}</td>;
+                                    })
+                                }
+                            </tr>
+                        </table>
                     </Jumbotron>
 
                 </Container>
