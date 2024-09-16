@@ -31,7 +31,12 @@ def preprocess_datas(src_dir, dest_dir):
         create_dir(dest_dir + "/" + my_dir + "/headers")
         create_dir(dest_dir + "/" + my_dir + "/sources")
         create_dir(dest_dir + "/" + my_dir + "/rest")
-
+        if("Debug" in filename):
+            print(filename)
+            continue
+        if(os.path.isdir(filename) and "." in filename):
+            print(filename)
+            continue
         if (filename.endswith(".txt")):
             shutil.copy2(filename, dest_dir + my_dir + "/text/" + fields[-1])
         elif (filename.endswith(".h")):
